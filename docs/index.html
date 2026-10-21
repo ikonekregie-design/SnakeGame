@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1630">
+<title>SikLab.io | Science Adventure Park — Kid-Friendly Edition</title>
+<style>
+  :root { --bg:#0b1228; --panel:#1a2545; --panel2:#202e52; --line:rgba(188,211,255,.16); --ink:#f4f8ff; --muted:#aab9d5; --mint:#72edc8; --gold:#ffdb86; --blue:#67c1ff; --orange:#ffae78; --shadow:0 18px 58px rgba(0,5,24,.4); }
+  * {box-sizing:border-box}
+  html {background:var(--bg)}
+  body {margin:0; min-height:100vh; color:var(--ink); font:500 15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; background:radial-gradient(ellipse 80% 50% at 50% -20%,#303c73 0,transparent 80%),radial-gradient(ellipse 50% 50% at 95% 70%,#123953 0,transparent 78%),var(--bg)}
+  button,input,select {font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}button:disabled{opacity:.48;cursor:default}
+  .view{display:none}.view.active{display:flex;animation:appear .3s both}@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .center{min-height:100vh;padding:26px 17px;align-items:center;justify-content:center}.shell{width:min(1100px,100%);margin:auto}.narrow{width:min(790px,100%)}
+  h1,h2,h3,p{margin:0}h1,h2,h3{letter-spacing:-.038em;line-height:1.13}h1{font-size:clamp(3.3rem,7vw,5.7rem);font-weight:950}h2{font-size:clamp(1.65rem,3.5vw,2.5rem)}p{color:var(--muted)}
+  .gradient{background:linear-gradient(100deg,#8acfff,#85efcb 51%,#ffb18c);background-clip:text;-webkit-background-clip:text;color:transparent}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid #6ce5c94a;border-radius:30px;background:#6ce5c914;color:#a3f9df;padding:7px 13px;text-transform:uppercase;font-size:.72rem;letter-spacing:.13em;font-weight:900}
+  .glass{background:linear-gradient(145deg,rgba(35,47,86,.96),rgba(19,28,56,.98));border:1px solid var(--line);border-radius:25px;box-shadow:var(--shadow)}
+  .btn{border:1px solid #dbe8ff27;border-radius:13px;background:#323f67;color:#f6faff;padding:11px 17px;min-height:44px;font-weight:850;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:transform .16s,background .16s}.btn:hover:not(:disabled){background:#455681;transform:translateY(-1px)}.btn:active:not(:disabled){transform:translateY(1px)}.btn.primary{background:linear-gradient(115deg,#7bcfff,#82f1c9);border:none;color:#10263a;box-shadow:0 8px 30px #6ee7cb2d}.btn.primary:hover:not(:disabled){background:linear-gradient(115deg,#a1dcff,#b4ffe4)}.btn.subtle{background:#ffffff0d}.btn.small-btn{min-height:36px;padding:7px 11px;font-size:.81rem}.btn.danger{color:#ffd6c7}
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}.hero-copy{padding:38px 2px}.hero h1{margin:17px 0 14px}.hero-copy>p{font-size:1.11rem;max-width:550px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin:27px 0 19px}.badges{display:flex;flex-wrap:wrap;gap:8px}.tag{font-size:.78rem;border-radius:9px;padding:5px 10px;border:1px solid #c6dcff20;background:#ffffff0d;color:#c8d9f8}
+  .hero-art{border:1px solid #b8d6ff1a;background:radial-gradient(ellipse at center,#2c466d 0%,#192747 65%,#141f3a 100%);min-height:360px;display:grid;place-items:center;overflow:hidden;border-radius:26px;position:relative}.hero-art svg{width:min(500px,100%);filter:drop-shadow(0 22px 25px #0006);animation:float 4s ease-in-out infinite}@keyframes float{50%{transform:translateY(-12px)}}.hero-art .float-tag{position:absolute;left:20px;bottom:18px;padding:8px 12px;background:#101c38d9;border:1px solid #b4d9ff38;border-radius:10px;color:#fff;font-size:.8rem;font-weight:850}
+  .panel{padding:27px 30px}.topline{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:23px}.muted{font-size:.85rem;color:var(--muted)}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;color:#e4edff;font-size:.83rem;font-weight:900;margin-bottom:7px}.field input,.field select{display:block;width:100%;background:#111a33;border-radius:12px;color:var(--ink);border:1px solid #7c91c06b;padding:12px 13px;min-height:46px}.field select option{background:#182341}
+  .label{font-size:.88rem;font-weight:850;margin:23px 0 11px}.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mode{min-height:136px;color:var(--ink);text-align:left;background:#101a36;border:2px solid #7389bf3d;border-radius:17px;padding:16px;transition:.17s}.mode:hover{border-color:#8cc5eb}.mode.selected{border-color:var(--mint);background:linear-gradient(140deg,#1a4146,#1a2948);box-shadow:0 0 0 3px #7aefc515}.mode strong{font-size:1.2rem;display:block;margin-bottom:6px}.mode span{display:block;font-size:.78rem;color:var(--muted)}
+  .options{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.toggle{border:1px solid #cce0ff30;border-radius:12px;background:#ffffff0c;color:#e7f1ff;padding:9px 12px;font-size:.86rem;font-weight:750}.toggle.on{color:#b4ffdd;border-color:#7aedbd80;background:#73e7bb1d}.footer{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-top:23px}
+  .tutorial{text-align:center}.owl{width:102px;height:105px;display:block;margin:0 auto 13px;animation:float 3.3s ease-in-out infinite}.tutorial-icon{font-size:4rem;line-height:1.3;margin:14px 0}.tutorial h2{margin:9px 0}.tutorial-description{max-width:550px;min-height:84px;margin:12px auto 10px;font-size:1.05rem}.dots{display:flex;justify-content:center;gap:7px;margin:19px}.dots span{width:9px;height:9px;border-radius:20px;background:#536180;transition:width .2s}.dots span.on{width:28px;background:var(--mint)}
+  .game-view{flex-direction:column;align-items:center;min-height:100vh;padding:12px 12px 24px}.game-shell{width:min(1215px,100%)}.game-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.game-logo{font-weight:950;font-size:1.5rem;letter-spacing:-.04em}.game-logo span{color:var(--mint)}.game-actions{display:flex;gap:7px;flex-wrap:wrap}
+  .hud{display:grid;grid-template-columns:1fr auto 1fr;gap:15px;align-items:center;border:1px solid var(--line);background:linear-gradient(100deg,#172944,#151f3d 50%,#34253c);padding:12px 17px;border-radius:17px;margin-bottom:10px}.stat{min-width:0}.stat.right{text-align:right}.name-line{display:flex;align-items:center;gap:8px}.right .name-line{justify-content:flex-end}.color-dot{display:inline-block;width:23px;height:23px;flex:none;border-radius:50%;background:radial-gradient(circle at 30% 25%,#e2faff,#6ac3ff 38%,#245cb8 95%);box-shadow:inset -2px -3px 5px #0006}.color-dot.orange{background:radial-gradient(circle at 30% 25%,#fff1d8,#ffa16b 38%,#c33e58 95%)}.player-name{font-size:.99rem;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:225px}.numbers{font-size:.79rem;color:#c7d7f0}.numbers b{font-size:1.22rem;color:#fff}.numbers .little{color:#d6f9e8}.timer{text-align:center;min-width:111px}.timer strong{font-size:clamp(1.6rem,3.2vw,2.3rem);letter-spacing:-.055em;font-variant-numeric:tabular-nums}.timer .small{display:block;color:#b0bfd9;font-size:.72rem;letter-spacing:.12em;font-weight:900}.meter{height:6px;background:#ffffff24;border-radius:99px;margin-top:6px;overflow:hidden;max-width:400px}.right .meter{margin-left:auto}.meter span{display:block;width:0;height:100%;background:linear-gradient(90deg,#3b9dff,#86dfff);transition:width .2s}.right .meter span{background:linear-gradient(90deg,#ffce83,#ff837a)}
+  .arena-wrap{position:relative;overflow:hidden;background:#0a1e35;padding:7px;border:1px solid #47688c9e;border-radius:20px;box-shadow:0 25px 44px #0006,0 0 0 3px #ffffff07}.arena-wrap canvas{display:block;width:100%;height:auto;aspect-ratio:42/24;border-radius:13px;background:#153f48;touch-action:none}
+  .overlay{position:absolute;inset:7px;border-radius:13px;background:#09152ce2;display:none;align-items:center;justify-content:center;z-index:4;padding:13px;backdrop-filter:blur(8px)}.overlay.show{display:flex;animation:appear .22s both}.modal{width:min(660px,100%);max-height:100%;overflow-y:auto;text-align:center;background:linear-gradient(145deg,#293757,#151f3c);border:1px solid #b7d2fc54;border-radius:23px;padding:21px;box-shadow:0 25px 70px #000b}.modal h2{margin:11px 0}.q-tag{display:inline-block;color:#a4f8dc;text-transform:uppercase;font-size:.75rem;letter-spacing:.13em;font-weight:950}.q-info{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}.q-person{font-weight:900}.quiz-timer{font-weight:950;border-radius:10px;background:#ffffff14;padding:5px 10px;font-variant-numeric:tabular-nums}.quiz-timer.low{background:#a74244;color:#fff}.q-text{font-size:clamp(1.14rem,2.55vw,1.72rem);font-weight:900;line-height:1.3;margin:13px 0 18px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answer{min-height:53px;border:1px solid #a5bfee65;border-radius:13px;background:#ffffff0b;color:#fff;text-align:left;padding:10px 12px;display:flex;align-items:center;gap:9px;font-weight:800;line-height:1.3;transition:.15s}.answer:hover:not(:disabled){border-color:#9ceccf;background:#ffffff1a}.answer .keycap{flex:none;display:grid;place-items:center;border-radius:9px;background:#ffffff20;width:31px;height:32px}.answer.correct{border-color:#77f4bf;background:#20805c83}.answer.wrong{border-color:#ff9f9f;background:#9b425080} .answer:disabled{opacity:1}.answer:last-child:nth-child(odd){grid-column:1/-1}.answer .keycap{font-weight:950;box-shadow:inset 0 1px 2px #ffffff65,0 2px 0 #0005}.answer .keycap[data-color="A"]{background:#e74646;color:white}.answer .keycap[data-color="B"]{background:#2cad65;color:white}.answer .keycap[data-color="C"]{background:#fff;color:#1b2945}.answer .keycap[data-color="D"]{background:#307bf7;color:white}.answer .keycap[data-color="E"]{background:#ffd735;color:#322800}
+  .io-controls{border:1px solid #6bb8de58;background:linear-gradient(130deg,#122a48,#152b3c);border-radius:15px;padding:15px;margin-top:17px}.io-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.io-title{font-size:.98rem;font-weight:950}.io-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:11px}.io-status{font-size:.81rem;color:#d7e6ff}.io-status b{color:#82f3ca}.io-desc{font-size:.78rem;color:#bdcce3;margin-top:8px}.io-colors{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.io-chip{padding:5px 9px;border-radius:9px;border:1px solid #ffffff30;background:#ffffff0b;font-size:.78rem;font-weight:850}.io-chip em{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:5px;border-radius:50%}.io-url{flex:1;min-width:210px;background:#091b31;color:#fff;border:1px solid #728cba;border-radius:10px;padding:8px 10px;max-width:370px}.io-help{font-size:.78rem;color:#c5d9e8;padding-top:8px;line-height:1.5}.io-live{font-size:.77rem;color:#a6ffda;margin-top:4px;min-height:21px}.feedback{min-height:44px;margin-top:13px;color:#e6f9ff;font-size:.9rem;font-weight:800}.feedback span{display:block;font-size:.81rem;color:#bfd3e9;font-weight:500}.msg{text-align:center}.msg p{margin:11px 0 21px}.footnote{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 2px;color:#bac9e2;font-size:.78rem}.key{display:inline-flex;padding:2px 5px;background:#34486b;border:1px solid #7a90b4;border-radius:5px;font-weight:900;color:#fff}
+  .results{text-align:center}.trophy{font-size:4.3rem;animation:float 3s infinite}.results h2{margin:10px 0}.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:21px 0}.result-card{padding:18px;border:1px solid #d6e5ff1a;border-radius:17px;background:#ffffff0b;text-align:left}.result-card.champ{border-color:#82f5c06b;background:#8df4bc14}.result-card .big{font-size:2.4rem;line-height:1.2;font-weight:950}.result-card dl{display:grid;grid-template-columns:1fr auto;gap:4px 8px;color:#c5d4ef;font-size:.86rem;margin:10px 0 0}.result-card dd{margin:0;color:#fff;font-weight:850}.result-card dt{margin:0}.result-name{font-size:1.04rem;font-weight:900;margin-bottom:8px}.lesson-summary{text-align:left;background:#ffffff0a;border:1px solid #d6e5ff19;border-radius:14px;padding:13px 16px;margin:10px 0}.lesson-summary h3{font-size:.97rem;margin-bottom:6px}.lesson-summary p{font-size:.85rem}.review{max-height:190px;overflow-y:auto;text-align:left}.review-item{padding:7px 0;border-top:1px solid #ffffff17;color:#dbe9ff;font-size:.84rem}.review-item b{color:#fff}.center-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:20px}
+  @media(max-width:810px){.hero{grid-template-columns:1fr}.hero-copy{padding:6px 0}.hero-art{min-height:230px}.hero-art svg{max-width:380px}.panel{padding:21px}.answers{gap:6px}.answer{padding:8px;font-size:.86rem}.hud{gap:6px;padding:9px}.stat .numbers{font-size:.69rem}.name-line{gap:5px}.player-name{font-size:.83rem}.timer{min-width:82px}.game-head{gap:7px}}
+  @media(max-width:550px){.fields,.result-grid{grid-template-columns:1fr}.mode{padding:10px;min-height:115px}.mode strong{font-size:1rem}.mode span{font-size:.72rem}.modal{padding:12px}.q-text{margin:7px 0 9px}.quiz-timer{padding:3px 7px}.answers{grid-template-columns:1fr}.answer:last-child:nth-child(odd){grid-column:auto}.answer{min-height:40px}.hero-actions .btn{flex:1}.footnote{font-size:.68rem}.hud .numbers .little{display:none}.game-actions .btn{font-size:.72rem;padding:7px}.timer strong{font-size:1.5rem}.game-logo{font-size:1.17rem}}
+  @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Controller-first: everything in player view is joystick-navigable, with NO mouse needed. */
+.legacy{display:none!important}
+.joy-legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;color:#cfdef2;font-size:.81rem}
+.joy-legend span{border:1px solid #ffffff23;background:#091b34c5;border-radius:9px;padding:5px 9px}
+.menu-stack{display:grid;gap:11px;max-width:480px;margin:20px 0 10px}
+.nav-choice{min-height:61px;display:flex;align-items:center;gap:14px;border:2px solid #748aaf4d;background:#0d1830d9;color:#edf8ff;padding:13px 18px;border-radius:16px;position:relative;transition:background .15s,border .15s,transform .15s;user-select:none}
+.nav-choice .num{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#ffffff15;color:#a7eadb;font-size:1.15rem;flex:none;font-weight:900}
+.nav-choice .nav-copy{display:flex;flex-direction:column;flex:1;min-width:0;line-height:1.2}
+.nav-choice .nav-copy b{font-size:1.04rem}
+.nav-choice .nav-copy small{font-size:.76rem;color:#bacbe4;margin-top:5px}
+.nav-choice .nav-value{font-size:.94rem;font-weight:900;color:#c0ffee;text-align:right;max-width:52%}
+.nav-choice .nav-arrow{color:#e0ff8d;font-weight:900;opacity:.5}
+.nav-choice.active-choice{border-color:#abffdd;background:linear-gradient(105deg,#1a4851,#1c3455);box-shadow:0 0 0 4px #6bf5bc24,0 4px 18px #4eedc219;transform:translateX(4px)}
+.nav-choice.active-choice:before{content:'▶';position:absolute;color:#b0ffdf;font-size:14px;left:4px;top:50%;transform:translateY(-50%)}
+.nav-choice.active-choice .num{background:#a9ffe1;color:#0e3446}
+.nav-choice:focus{outline:none}
+.nav-choice[aria-disabled="true"]{opacity:.45}
+.controller-pill{border-radius:14px;border:1px solid #95e6d055;background:#17434988;padding:11px 14px;font-size:.86rem;color:#d6ffea;margin-top:13px}
+.controller-ui-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.controller-ui-header h2{margin-top:9px}
+.tutorial .tutorial-description{min-height:100px}
+.tutorial .joy-legend{justify-content:center}
+.tutorial .controller-prompt{display:inline-block;color:#b5ffdf;font-weight:900;padding:10px;margin-top:8px}
+.setup-stack{max-width:none;grid-template-columns:1fr 1fr;gap:10px}
+.setup-stack .nav-choice{min-height:78px}
+.setup-stack .wide{grid-column:1/-1}
+#hardware .io-controls{margin-top:18px}
+#hardware .io-row button{min-height:42px}
+#hardware .io-url{max-width:280px}
+#pauseOverlay .menu-stack{margin:19px auto 10px;max-width:370px}
+#pauseOverlay .modal{text-align:center}
+#results .menu-stack{grid-template-columns:1fr 1fr;max-width:none}
+#results .joy-legend{justify-content:center}
+#answers .answer{cursor:default!important}
+#quizOverlay .q-text{font-size:clamp(1.13rem,2.4vw,1.58rem)}
+#quizOverlay .answer{pointer-events:none}
+#game .game-actions{display:none}
+#game .footnote{font-size:.8rem}
+#controlStatus{margin-top:9px;color:#d1fae7;font-size:.87rem;font-weight:750}
+@media(max-width:720px){.setup-stack,#results .menu-stack{grid-template-columns:1fr}.setup-stack .wide{grid-column:auto}.nav-choice{min-height:54px}.nav-choice .nav-value{font-size:.81rem}.hero-copy{padding:20px 2px}}
+
+/* Science-only locked configuration: no audio or subject toggles are presented. */
+.fixed-subject{display:flex;gap:14px;align-items:center;margin-top:21px;background:linear-gradient(110deg,#12454c,#1b3650);border:1px solid #83f2c274;border-radius:18px;padding:18px 20px}
+.fixed-subject .fixed-icon{font-size:2rem;line-height:1}
+.fixed-subject strong{display:block;font-size:1.22rem;letter-spacing:.08em;color:#d2ffe9}
+.fixed-subject small{display:block;color:#b0d8dc;font-size:.82rem;margin-top:4px}
+.fixed-subject .fixed-lock{margin-left:auto;white-space:nowrap;color:#a5fbd5;font-size:.8rem;font-weight:850}
+.fixed-features{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;color:#d6e9ff;font-size:.78rem}
+.fixed-features span{background:#243653aa;border:1px solid #d9e9ff24;border-radius:99px;padding:5px 11px}
+.setup-stack{grid-template-columns:1fr}
+@media(max-width:520px){.fixed-subject{padding:14px 12px;gap:8px}.fixed-subject .fixed-lock{font-size:.69rem}}
+
+/* SikLab.io visual enhancements: arcade light, smooth interactions, responsive controller-only menus */
+.subtitle-game{font-size:clamp(1.5rem,3.9vw,3rem);font-weight:850;letter-spacing:-.035em;color:#d6e9ff}
+.hero h1{line-height:1.12}.hero-copy .eyebrow{box-shadow:0 0 22px #82efca17;animation:badgeGlow 3s ease-in-out infinite alternate}
+@keyframes badgeGlow{to{box-shadow:0 0 32px #82efca55;transform:translateY(-2px)}}
+.hero-art:before{content:'';position:absolute;width:310px;height:310px;border-radius:50%;border:2px dashed #8bffdb30;animation:heroOrbit 25s linear infinite}
+.hero-art:after{content:'✦';position:absolute;right:20px;top:15px;color:#ffe5ab;font-size:26px;text-shadow:0 0 23px #ffe27a;animation:starBlink 2.5s ease-in-out infinite}
+@keyframes heroOrbit{to{transform:rotate(360deg)}}@keyframes starBlink{50%{transform:scale(1.5) rotate(18deg);opacity:.45}}
+.hero-art .float-tag{animation:slideFloat 3s ease-in-out infinite}
+@keyframes slideFloat{50%{transform:translateY(-6px)}}
+.device-indicators{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+.device-status{border-radius:999px;border:1px solid #f9a7a65e;background:#52283365;color:#ffd9d5;padding:7px 11px;font-size:.77rem;font-weight:850;transition:background .3s,border-color .3s,color .3s;white-space:nowrap}
+.device-status.connected{border-color:#70e4b788;background:#194d408f;color:#c2ffe3;box-shadow:0 0 16px #6bffa31c}
+.device-note{font-size:.77rem;color:#b7c7db;margin-top:9px}
+.device-indicators-small{justify-content:center}.device-live{display:flex;align-items:center;gap:5px}.device-live .device-status{font-size:.69rem;padding:5px 8px}
+.mode-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:23px 0 12px}
+.difficulty-card{position:relative;min-height:195px;background:linear-gradient(150deg,#142340,#101a31);border:2px solid #ffffff27;border-radius:22px;padding:23px 12px 17px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;transition:transform .25s,border-color .25s,background .25s,box-shadow .25s}
+.difficulty-card b{font-size:1.25rem;letter-spacing:.07em}.difficulty-card small{font-size:.77rem;line-height:1.4;color:#b9c9e3;max-width:190px}
+.difficulty-emblem{font-size:3.4rem;line-height:1.1;filter:drop-shadow(0 8px 14px #0007);animation:emblemHover 3s ease-in-out infinite}
+@keyframes emblemHover{50%{transform:translateY(-5px) rotate(6deg)}}
+.difficulty-card.active-choice{border-color:#99ffce;background:linear-gradient(152deg,#1d534b,#183959);box-shadow:0 0 0 4px #7cffc41f,0 15px 37px #0005,0 0 40px #5bffb820;transform:translateY(-7px) scale(1.025)}
+.difficulty-card.active-choice:after{content:'✓ SELECTED';position:absolute;top:8px;right:9px;font-size:.59rem;font-weight:900;letter-spacing:.09em;color:#a9ffdb}
+.start-instruction{border-radius:13px;background:linear-gradient(100deg,#174f50,#183956);border:1px solid #8df5cb75;color:#d6ffef;padding:13px;text-align:center;font-size:.94rem;font-weight:900;animation:instructionPulse 2.4s ease-in-out infinite}
+@keyframes instructionPulse{50%{box-shadow:0 0 20px #73ecc832}}
+.tutorial-icon{animation:tutorialBounce 2.4s ease-in-out infinite;filter:drop-shadow(0 8px 15px #5efad366)}
+@keyframes tutorialBounce{50%{transform:translateY(-7px) rotate(-6deg) scale(1.07)}}
+.tutorial .dots span{transition:width .3s,background .3s}.overlay.show .modal{animation:cardZoom .32s cubic-bezier(.2,1.25,.36,1) both}
+@keyframes cardZoom{from{transform:translateY(15px) scale(.94);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.answer{box-shadow:inset 0 1px 0 #ffffff21;animation:answerEnter .3s ease both}.answer:nth-child(2){animation-delay:.04s}.answer:nth-child(3){animation-delay:.08s}.answer:nth-child(4){animation-delay:.12s}.answer:nth-child(5){animation-delay:.16s}
+@keyframes answerEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.answer.correct{animation:correctPulse .6s ease-in-out 2}@keyframes correctPulse{50%{box-shadow:0 0 22px #88ffc9a1}}
+.timer strong{display:inline-block;animation:timePulse 2.5s ease-in-out infinite}@keyframes timePulse{50%{filter:drop-shadow(0 0 10px #9efede70)}}
+.nav-choice.active-choice{animation:selectGlow 2s ease-in-out infinite alternate}@keyframes selectGlow{to{box-shadow:0 0 0 4px #6bf5bc26,0 0 31px #4eedc247}}
+@media(max-width:700px){.mode-cards{gap:6px}.difficulty-card{min-height:165px;padding:18px 5px 13px}.difficulty-card b{font-size:.9rem}.difficulty-card small{font-size:.66rem}.difficulty-emblem{font-size:2.5rem}.device-live{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.difficulty-card,.answer{animation:none!important}}
+
+
+
+/* Clear keyboard + physical Red(A) start prompt, kept inside the no-scroll kiosk layout. */
+.enter-start{display:flex;align-items:center;gap:13px;width:min(495px,100%);padding:13px 16px;margin:17px 0 7px;border:1.5px solid #82f5caad;border-radius:17px;background:linear-gradient(105deg,#1b605a77,#163e628c);box-shadow:0 0 30px #73f3c51b;animation:enterGlow 2.5s ease-in-out infinite;cursor:default}
+.enter-key{flex:none;display:grid;place-items:center;min-width:46px;height:43px;border:1px solid #b8ffe1ab;border-bottom:4px solid #61b4a7;background:#133b4a;border-radius:11px;font-weight:950;font-size:1.75rem;color:#d9fff2}
+.enter-message{display:flex;flex:1;flex-direction:column;line-height:1.34}.enter-message strong{font-size:clamp(.93rem,1.7vw,1.23rem);letter-spacing:.06em;color:#e9fff7}.enter-message small{font-size:.77rem;color:#a9eccc;margin-top:3px}
+.start-flash{font-size:.7rem;color:#9bfed4;animation:blinker 1.1s step-end infinite}@keyframes blinker{50%{opacity:.05}}
+@keyframes enterGlow{50%{box-shadow:0 0 31px #8cffe65c;border-color:#c0ffe2}}
+@media (max-height:700px){#home .enter-start{padding:9px 11px;margin:9px 0 4px}.enter-key{min-width:39px;height:36px;font-size:1.4rem}.enter-message small{font-size:.69rem}}
+@media (prefers-reduced-motion:reduce){.enter-start,.start-flash{animation:none!important}}
+
+/* SikLab.io fullscreen kiosk: one screen per view, no scrolling. */
+html,body { width:100%; height:100%; overflow:hidden!important; overscroll-behavior:none; }
+body { position:relative; touch-action:none; }
+.view { position:fixed; inset:0; width:100%; height:100vh; height:100dvh; min-height:0!important; max-height:100dvh; overflow:hidden!important; }
+.center { min-height:0!important; padding:clamp(6px,1.4vmin,16px); }
+.center > .shell { position:absolute; left:50%; top:50%; flex:0 0 auto; max-width:calc(100vw - 16px); min-width:0; transform-origin:center center; transform:translate(-50%,-50%) scale(var(--view-fit,1)); }
+.game-view { height:100dvh; min-height:0!important; padding:clamp(4px,.9vh,10px) clamp(5px,1vw,12px); justify-content:center; }
+.game-shell { height:100%; min-height:0; min-width:0; width:min(1215px,100%); display:flex; flex-direction:column; align-items:stretch; }
+.game-head { flex:0 0 auto; margin-bottom:clamp(3px,.7vh,9px); }
+.hud { flex:0 0 auto; margin-bottom:clamp(3px,.7vh,9px); }
+.arena-wrap { flex:0 0 auto; align-self:center; margin:0; min-height:0; max-width:100%; max-height:100%; padding:5px; border-radius:16px; }
+.arena-wrap canvas { width:100%; height:100%; aspect-ratio:auto; border-radius:11px; }
+.footnote { flex:0 0 auto; margin-top:clamp(3px,.5vh,8px); min-height:0; }
+/* Question and pause overlays use the full viewport, not the shrinking board. */
+#quizOverlay,#pauseOverlay { position:fixed; inset:0; z-index:70; border-radius:0; padding:clamp(8px,2vmin,20px); overflow:hidden; }
+#quizOverlay .modal,#pauseOverlay .modal { max-height:calc(100dvh - 16px); overflow:hidden; transform-origin:center center; }
+#quizOverlay .modal { width:min(660px,100%); }
+#pauseOverlay .modal { width:min(520px,100%); }
+#quizOverlay .answers { gap:clamp(5px,1vh,9px); }
+#quizOverlay .answer { min-height:clamp(36px,5.4vh,53px); padding:clamp(4px,1vh,10px) 10px; }
+#quizOverlay .q-text { margin:clamp(5px,1.5vh,13px) 0 clamp(8px,1.8vh,18px); }
+#quizOverlay .q-info { margin-bottom:clamp(4px,1vh,9px); }
+/* Learning review stays on a single screen. Full wrong answers remain in the JSON report. */
+#results .panel { padding:clamp(12px,2.6vh,27px) clamp(14px,2.4vw,30px); }
+#results .trophy { font-size:clamp(2rem,6vh,4.3rem); line-height:1.1; }
+#results .result-grid { margin:clamp(8px,1.7vh,20px) 0; gap:10px; }
+#results .result-card { padding:clamp(7px,1.4vh,18px); }
+#results .menu-stack { gap:clamp(5px,1vh,11px); margin:clamp(7px,1.4vh,18px) 0 0; }
+#results .nav-choice { min-height:clamp(42px,6vh,61px); padding:clamp(7px,1.2vh,13px) 12px; }
+#results #wrongReview { max-height:clamp(32px,9vh,85px); overflow:hidden; }
+#results .review-item:nth-child(n+3) { display:none; }
+#results .joy-legend { margin-top:8px; }
+#tutorial .panel { padding:clamp(12px,2.5vh,27px); }
+#tutorial .owl { width:clamp(66px,11vh,102px); height:auto; margin-bottom:clamp(5px,1vh,13px); }
+#tutorial .tutorial-icon { font-size:clamp(2.5rem,7vh,4rem); margin:clamp(5px,1.5vh,14px) 0; }
+#tutorial .tutorial-description { min-height:0; margin:clamp(7px,1.5vh,12px) auto; }
+#tutorial .dots { margin:clamp(10px,2vh,19px) auto; }
+#tutorial .joy-legend { margin-top:8px; }
+#setup .panel { padding:clamp(12px,2.6vh,27px) clamp(14px,2.4vw,30px); }
+#setup .fixed-subject { padding:clamp(8px,1.6vh,18px) 16px; margin-top:clamp(10px,1.8vh,21px); }
+#setup .mode-cards { margin:clamp(10px,1.8vh,23px) 0 clamp(6px,1vh,12px); }
+#setup .difficulty-card { min-height:clamp(100px,22vh,195px); padding:clamp(10px,2vh,23px) 10px; gap:clamp(2px,.8vh,8px); }
+#setup .difficulty-emblem { font-size:clamp(2.2rem,6vh,3.4rem); }
+#setup .start-instruction { padding:clamp(7px,1.2vh,13px); }
+#setup .joy-legend { margin-top:8px; }
+#home .hero-art { min-height:clamp(200px,40vh,360px); }
+#home .hero-copy { padding:clamp(6px,3vh,38px) 2px; }
+#home .hero-actions { margin:clamp(10px,2.5vh,27px) 0 clamp(7px,2vh,19px); }
+@media (max-height:700px) {
+  #home h1 { font-size:clamp(2.5rem,6vw,4.4rem); }
+  #setup .difficulty-card { min-height:105px; }
+  #setup .fixed-features { margin-top:7px; }
+  #setup .device-indicators { margin-top:7px; }
+  #results .result-card dl { font-size:.79rem; }
+  #results .menu-stack .nav-copy b { font-size:.93rem; }
+  #game .game-head .tag { font-size:.69rem; padding:3px 6px; }
+  #game .game-logo { font-size:1.2rem; }
+  #game .hud { padding:6px 10px; }
+  #game .timer strong { font-size:1.48rem; }
+  #quizOverlay .modal { padding:clamp(8px,2vh,15px); }
+}
+@media (max-width:700px) {
+  #home .hero { grid-template-columns:1fr; gap:9px; }
+  #home .hero-copy { text-align:center; padding:4px 0; }
+  #home .hero-copy > p { margin:0 auto; }
+  #home .hero-art { min-height:180px; }
+  #home .hero-art svg { max-width:300px; }
+  #home .hero-actions,#home .badges,#home .device-indicators { justify-content:center; }
+  #setup .difficulty-card { min-height:115px; }
+  #setup .start-instruction { font-size:.75rem; }
+  #game .game-head { flex-wrap:nowrap; }
+  #game .game-head .tag { display:none; }
+  #game .device-live { width:auto; }
+  #game .footnote { font-size:.65rem; }
+  #game .hud .numbers { font-size:.67rem; }
+  #game .timer { min-width:72px; }
+  #game .timer strong { font-size:1.3rem; }
+  #game .player-name { font-size:.8rem; }
+}
+@media (max-width:450px) {
+  #home .hero-art { min-height:140px; }
+  #home .hero-art svg { max-width:245px; }
+  #setup .fixed-features,#setup .device-indicators { justify-content:center; }
+  #setup .fixed-subject { margin-top:8px; }
+  #setup .mode-cards { gap:5px; }
+  #setup .difficulty-card { min-height:105px; }
+  #setup .difficulty-card b { font-size:.82rem; }
+  #setup .difficulty-card small { font-size:.61rem; }
+  #setup .joy-legend,#tutorial .joy-legend { font-size:.67rem; }
+  #results .result-card { padding:8px; }
+  #quizOverlay .modal { padding:12px; }
+  #quizOverlay .answers { grid-template-columns:1fr; }
+}
+
+
+/* Story lesson before tutorial */
+.fact-box{max-width:620px;margin:8px auto 0;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,#0f3f49,#163554);border:1px solid #7fe8d077;color:#dffff1;font-size:.95rem;line-height:1.45;box-shadow:inset 0 0 0 1px #ffffff10}
+.fact-box b{display:block;color:#a9ffe4;margin-bottom:4px;letter-spacing:.05em;font-size:.78rem;text-transform:uppercase}
+#lesson .panel { padding:clamp(12px,2.5vh,27px); }
+#lesson .owl { width:clamp(66px,11vh,102px); height:auto; margin-bottom:clamp(5px,1vh,13px); }
+#lesson .tutorial-icon { font-size:clamp(2.5rem,7vh,4rem); margin:clamp(5px,1.5vh,14px) 0; }
+#lesson .tutorial-description { min-height:0; margin:clamp(7px,1.5vh,12px) auto; }
+#lesson .dots { margin:clamp(10px,2vh,19px) auto; }
+#lesson .joy-legend { margin-top:8px; }
+#lesson .fact-box{font-size:clamp(.78rem,1.7vh,.95rem);padding:clamp(8px,1.5vh,12px) 14px}
+
+
+
+/* ================= Kid-Friendly Distinctive Design Refresh ================= */
+:root{
+  --bg:#f4fbff;
+  --panel:#ffffff;
+  --panel2:#fff4d8;
+  --line:rgba(88,139,190,.20);
+  --ink:#173057;
+  --muted:#54729b;
+  --mint:#4be0b7;
+  --gold:#ffd86b;
+  --blue:#54a8ff;
+  --orange:#ff9d62;
+  --berry:#ff6ba2;
+  --lav:#9d8cff;
+  --sky:#7ce7ff;
+  --shadow:0 22px 55px rgba(40,89,145,.18);
+}
+html{background:linear-gradient(180deg,#f2fbff 0%,#dff7ff 32%,#dff9f3 100%)}
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,214,98,.55) 0 7%, transparent 7.4%),
+    radial-gradient(circle at 85% 14%, rgba(124,231,255,.75) 0 8%, transparent 8.4%),
+    radial-gradient(circle at 84% 82%, rgba(255,167,201,.45) 0 10%, transparent 10.4%),
+    radial-gradient(circle at 14% 86%, rgba(157,140,255,.28) 0 8%, transparent 8.4%),
+    linear-gradient(180deg,#f2fbff 0%,#dff5ff 42%,#d7fff0 100%);
+}
+body:before,body:after{content:"";position:fixed;z-index:0;pointer-events:none;filter:blur(2px)}
+body:before{inset:auto auto 8% 2%;width:170px;height:170px;border-radius:46% 54% 53% 47%;background:radial-gradient(circle at 30% 30%,#fff8d7,#ffd15f 58%,#ffb94d 100%);opacity:.38}
+body:after{right:3%;top:4%;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffffff,#7be5ff 60%,#4ab8ff 100%);opacity:.28}
+.view{position:relative;z-index:1}
+.glass{
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(248,253,255,.93));
+  border:3px solid rgba(136,196,255,.45);
+  border-radius:34px;
+  box-shadow:var(--shadow), inset 0 0 0 3px rgba(255,255,255,.65);
+}
+.eyebrow{
+  background:linear-gradient(90deg,#fff6d6,#e9fff8);
+  color:#355474;border:2px solid #ffe193;font-size:.73rem;letter-spacing:.12em;
+  box-shadow:0 8px 18px rgba(255,214,98,.18)
+}
+h1,h2,h3{color:#1e3261}
+p,.muted,.numbers,.tag,.device-note,.joy-legend span,.fixed-features span,.difficulty-card small,.nav-copy small{color:#5a7394}
+.gradient{background:linear-gradient(92deg,#ff8f66 0%,#ffa95b 22%,#4fc2ff 56%,#5ae7b7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle-game{color:#2e5f86;font-weight:900}
+.btn,.toggle,.nav-choice,.answer,.device-status,.tag,.fixed-subject,.start-instruction,.controller-prompt,.fact-box,.menu-stack .nav-choice{
+  border-radius:22px;
+}
+.hero{grid-template-columns:1.04fr .96fr;gap:22px}
+.hero-copy{padding:28px 2px 24px}
+.hero h1{line-height:1.01;text-shadow:0 2px 0 rgba(255,255,255,.6)}
+.hero-copy>p{font-size:1.08rem;max-width:590px;color:#54729b}
+.hero-copy .badges .tag{background:#fff;border:2px solid #d8ecff;color:#47709b;box-shadow:0 10px 18px rgba(93,145,202,.08)}
+.hero-art{
+  min-height:380px;
+  border:3px solid #b8ebff;
+  background:
+    radial-gradient(circle at 25% 22%, rgba(255,255,255,.9) 0 3%, transparent 3.4%),
+    radial-gradient(circle at 72% 19%, rgba(255,255,255,.7) 0 2.5%, transparent 2.8%),
+    radial-gradient(circle at 82% 69%, rgba(255,255,255,.7) 0 2.8%, transparent 3.1%),
+    linear-gradient(180deg,#a8efff 0%,#7edcff 25%,#6ac7ff 54%,#8ef0cd 100%);
+  box-shadow:inset 0 -28px 0 rgba(255,255,255,.18),0 22px 40px rgba(76,147,214,.18);
+}
+.hero-art:before,.hero-art:after{content:"";position:absolute;border-radius:999px;background:#fff;opacity:.9}
+.hero-art:before{width:92px;height:34px;top:22px;left:30px;box-shadow:26px 8px 0 8px #fff,52px 0 0 0 #fff}
+.hero-art:after{width:66px;height:26px;right:44px;top:54px;box-shadow:18px 7px 0 5px #fff,42px 1px 0 0 #fff}
+.hero-art svg{animation:float 4s ease-in-out infinite}
+.float-tag{background:rgba(255,255,255,.85)!important;color:#35668a!important;border:2px solid #bfe8ff!important;box-shadow:0 10px 20px rgba(82,147,210,.18)}
+.enter-start{background:linear-gradient(100deg,#fff6d9,#edfef9)!important;border:2px solid #ffcf6b!important;box-shadow:0 12px 24px rgba(255,193,71,.22)!important}
+.enter-key{background:linear-gradient(180deg,#ffffff,#ffe6a1)!important;border:2px solid #ffc54d!important;border-bottom:5px solid #f7b93d!important;color:#7f4f00!important}
+.enter-message strong{color:#2c547f!important}.enter-message small{color:#6b7e88!important}
+.menu-stack{gap:12px}
+.nav-choice{
+  background:linear-gradient(180deg,#ffffff 0%,#f5fbff 100%);
+  border:2px solid #d7ebff;
+  box-shadow:0 12px 20px rgba(94,145,205,.12);
+}
+.nav-choice .num{background:linear-gradient(180deg,#fff0ab,#ffd161);color:#83550c;border-radius:16px;border:2px solid #ffc14f}
+.nav-choice .nav-arrow{color:#5b9de9}
+.nav-choice.active-choice{background:linear-gradient(180deg,#fffef6,#eafff9)!important;border-color:#7ce9c4!important;box-shadow:0 0 0 5px rgba(124,233,196,.18),0 16px 24px rgba(88,161,135,.14)!important}
+.device-status{background:#fff;border:2px solid #d8ebff;color:#3d6790;box-shadow:0 9px 18px rgba(101,144,195,.10)}
+.device-status.connected{background:linear-gradient(90deg,#f0fff8,#ffffff);border-color:#8ce9bf;color:#247957}
+.controller-ui-header,.topline,.liveRow{color:#2b557f}
+.fixed-subject,.start-instruction,.controller-prompt,.fact-box,.fixed-features span{
+  background:linear-gradient(180deg,#fffef7,#effcff);
+  border:2px solid #dbeeff;
+  color:#386584;
+  box-shadow:0 10px 18px rgba(96,145,205,.10)
+}
+.fixed-lock{background:linear-gradient(180deg,#b7ffd8,#77e6b6)!important;color:#15543d!important;border-radius:999px;padding:7px 12px}
+.mode-cards{gap:14px}
+.difficulty-card{
+  background:linear-gradient(180deg,#fffdf8 0%,#f0fbff 100%);
+  border:3px solid #d9edff;
+  box-shadow:0 16px 25px rgba(91,141,201,.12);
+}
+.difficulty-card:nth-child(1){background:linear-gradient(180deg,#fffdf3,#edfff3)}
+.difficulty-card:nth-child(2){background:linear-gradient(180deg,#fffaf4,#eef8ff)}
+.difficulty-card:nth-child(3){background:linear-gradient(180deg,#fff6f2,#f2f2ff)}
+.difficulty-card.active-choice{border-color:#ffca69;background:linear-gradient(180deg,#fffce6,#ebfff7)!important;box-shadow:0 0 0 5px rgba(255,205,109,.22),0 16px 34px rgba(110,163,214,.18)!important}
+.difficulty-card.active-choice:after{background:#fff8d8;padding:4px 8px;border-radius:999px;color:#986100;border:1px solid #ffc85f}
+.difficulty-emblem{filter:drop-shadow(0 7px 10px rgba(62,126,171,.22))}
+#lesson .glass,#tutorial .glass,#results .glass,#setup .glass{position:relative;overflow:hidden}
+#lesson .glass:before,#tutorial .glass:before,#results .glass:before,#setup .glass:before{
+  content:"";position:absolute;inset:auto -20px -20px auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,#ffe98a 0%,rgba(255,233,138,.15) 55%,transparent 56%);opacity:.55;pointer-events:none
+}
+#lesson .tutorial-icon,#tutorial .tutorial-icon{filter:drop-shadow(0 8px 14px rgba(255,180,80,.28))}
+#lesson .tutorial-description,#tutorial .tutorial-description{color:#54729b;font-size:1.05rem}
+.fact-box{background:linear-gradient(180deg,#fff8dc,#eefcff)!important;border-color:#ffd572!important;color:#426788!important}
+.fact-box b{color:#9a6500!important}
+.game-head .game-logo{color:#21466e;text-shadow:0 2px 0 rgba(255,255,255,.75)}
+.game-head .game-logo span{color:#31cbb0!important}
+.hud{
+  background:linear-gradient(180deg,#ffffff 0%,#f4fbff 52%,#fffaf0 100%);
+  border:3px solid rgba(142,205,255,.55);
+  box-shadow:0 18px 28px rgba(85,139,196,.13);
+}
+.color-dot{box-shadow:inset -2px -3px 5px rgba(0,0,0,.18), 0 4px 9px rgba(84,170,255,.25)}
+.player-name{color:#21466e}.numbers b{color:#1d335e}.numbers .little{color:#35a27e}
+.timer .small{color:#6282a3}.timer strong{color:#21466e}
+.arena-wrap{
+  background:linear-gradient(180deg,#ffffff 0%,#f0fbff 100%);
+  border:3px solid #9fdfff;
+  border-radius:28px;
+  box-shadow:0 24px 40px rgba(79,142,201,.15), inset 0 0 0 3px rgba(255,255,255,.55)
+}
+.overlay{background:rgba(133,202,255,.18);backdrop-filter:blur(10px)}
+.modal{
+  background:linear-gradient(180deg,#ffffff 0%,#f5fbff 65%,#fff8ea 100%);
+  border:3px solid #bde4ff;
+  box-shadow:0 25px 55px rgba(68,119,167,.20);
+}
+.modal h2,.q-text,.q-person,#resultTitle{color:#1f3a64}
+.q-tag{color:#229d83}.quiz-timer{background:#eef8ff;color:#365c84;border:2px solid #d5ebff}
+.quiz-timer.low{background:#ffebe8;color:#b74444;border-color:#ffb8b0}
+.answer{background:linear-gradient(180deg,#ffffff 0%,#f6fbff 100%);border:2px solid #d9ebff;color:#274567;box-shadow:0 9px 18px rgba(92,144,205,.10)}
+.answer:hover:not(:disabled){border-color:#8fd7ff;background:linear-gradient(180deg,#ffffff 0%,#effcff 100%)}
+.answer.correct{background:linear-gradient(180deg,#ebfff3,#d5ffe7)!important;border-color:#67d394!important}
+.answer.wrong{background:linear-gradient(180deg,#fff1f1,#ffdede)!important;border-color:#ff9ca6!important}
+.feedback{color:#4f6e91}
+.footnote{color:#4b6a8e}
+.lesson-summary,.review,.result-card{
+  background:linear-gradient(180deg,#ffffff 0%,#f7fbff 100%);
+  border:2px solid #dceeff;
+  box-shadow:0 10px 18px rgba(94,145,205,.09);
+}
+.result-card dt{color:#59779a}.result-card dd{color:#1e3865}
+.trophy{filter:drop-shadow(0 10px 16px rgba(255,196,79,.25))}
+.joy-legend span{background:rgba(255,255,255,.72);border:1px solid #d8ebff;color:#527496;padding:7px 12px;border-radius:999px;box-shadow:0 6px 12px rgba(91,145,202,.08)}
+#home .joy-legend span,#setup .joy-legend span,#lesson .joy-legend span,#tutorial .joy-legend span,#results .joy-legend span{backdrop-filter:blur(4px)}
+@media(max-width:700px){
+  .glass{border-radius:28px}
+  .hero{grid-template-columns:1fr;gap:12px}
+  .hero-art{min-height:220px}
+  .joy-legend span{font-size:.7rem;padding:6px 10px}
+}
+
+
+/* Grade 3 visual refresh: calm space, clear actions, playful science. */
+:root{--ink:#203c38;--muted:#5c726a;--mint:#21815e;--bg:#f7f8ee;--gold:#e8b34c}
+html,body{background:#f7f8ee;color:#203c38}
+body{background:radial-gradient(ellipse at 12% 20%,#e6f1dc 0,transparent 45%),radial-gradient(ellipse at 90% 85%,#fff0d7 0,transparent 45%),#f8f9f1}
+body:before,body:after{display:none!important}
+.view.center{padding:24px;justify-content:center;align-items:center}
+#home .hero{display:flex;flex-direction:column;gap:0;width:min(780px,100%);text-align:center;background:none;border:0;box-shadow:none;padding:12px 0}
+#home .eyebrow{background:#e9eedf;color:#526948;border:0;padding:8px 16px;font-size:10px;letter-spacing:.18em}
+.hero-copy{padding:0!important;text-align:center;width:100%}
+#home h1{font-size:clamp(46px,7vw,76px);margin:0 0 12px;letter-spacing:-.07em;line-height:1;color:#203f36}
+#home h1 span{color:#368a64}
+#home h2{font-size:clamp(19px,3vw,27px);font-weight:750;letter-spacing:-.035em;margin:0 0 10px}
+#home .hero-copy>p{font-size:15px;margin:0 auto 24px;color:#62756a;max-width:100%}
+.science-scene{width:330px;height:205px;position:relative;margin:10px auto 0;background:radial-gradient(ellipse,#e5efda,transparent 68%)}
+.science-scene>svg{width:250px;height:205px;animation:gentle-bob 5s ease-in-out infinite;filter:drop-shadow(0 10px 8px #66815418)}
+.science-float{position:absolute;display:grid;place-items:center;width:49px;height:49px;background:#fffdf4;border:1px solid #dfe6d6;border-radius:17px;font-size:28px;box-shadow:0 6px 12px #314f3610;animation:gentle-bob 4s ease-in-out infinite}
+.atom{left:10px;top:25px;color:#7c75af;transform:rotate(-12deg)}.plant{right:3px;top:15px;animation-delay:-1.4s}.flask{right:5px;bottom:20px;animation-delay:-2.8s}
+.play-button{display:inline-flex;align-items:center;justify-content:center;gap:30px;border:0;border-radius:18px;background:#277b58;color:white;min-width:220px;min-height:58px;padding:14px 26px;font-weight:800;font-size:18px;box-shadow:0 5px 0 #1a5b41,0 12px 22px #277b5818;transition:transform .2s,background .2s}
+.play-button:hover{background:#206b4d;transform:translateY(-2px)}.play-button:active{transform:translateY(3px);box-shadow:0 2px 0 #1a5b41}
+button:focus-visible,[role=button]:focus-visible{outline:3px solid #9b6ac6;outline-offset:5px}
+.mini-hint{font-size:11px;color:#6a796b;margin-top:15px}
+.home-chips{display:flex;justify-content:center;gap:28px;margin:26px 0 0;font-size:12px;color:#627360}.home-chips span{display:flex;gap:6px;align-items:center}
+.quiet-status{display:none}
+.glass{background:#fffef9;border:1px solid #e0e7d8;border-radius:30px;box-shadow:0 18px 55px #314e3510}
+.panel{padding:34px}.narrow{width:min(760px,100%)}
+#setup{text-align:center}#setup .controller-ui-header{justify-content:center}#setup .controller-ui-header>.tag,#setup .fixed-subject,#setup .device-indicators,#setup .fixed-features,#setup .joy-legend{display:none}
+.eyebrow{color:#5c754d;background:#eef3e6;border:0;font-size:10px;letter-spacing:.14em}
+#setup h2{margin-top:14px;font-size:32px;color:#203f36}.setup-subtitle{margin-top:12px;font-size:15px}
+.mode-cards{gap:14px;margin:28px 0}.difficulty-card{background:#f6f7ef!important;border:2px solid #e5e9dd!important;color:#334c3d!important;min-height:170px;padding:22px 12px;border-radius:22px!important;cursor:pointer;transition:transform .2s,border-color .2s}
+.difficulty-card b{font-size:15px;letter-spacing:.04em}.difficulty-card small{color:#64775e!important;font-size:12px;line-height:1.5}.difficulty-emblem{font-size:40px!important;display:block;margin-bottom:12px}
+.difficulty-card.active-choice{border-color:#458260!important;box-shadow:0 0 0 3px #45826012!important;transform:translateY(-4px);background:#edf4e6!important}.difficulty-card.active-choice:before{display:none}
+.start-instruction{background:none!important;border:0!important;padding:0!important;margin-top:24px}
+#setup .start-instruction:after{content:'← → Choose · Enter to begin';display:block;font-size:11px;color:#6a796b;margin-top:18px}
+.tutorial .owl{width:65px;height:68px;margin-bottom:8px}.tutorial-icon{animation:gentle-bob 4s ease-in-out infinite;font-size:52px!important;margin:14px auto}
+.tutorial h2{color:#203f36}.tutorial-description{color:#536b5a;font-size:18px;line-height:1.7;min-height:0;max-width:560px}
+.fact-box{background:#eef4df!important;border:1px solid #d9e6c9!important;color:#526946!important;border-radius:18px!important}.fact-box b{color:#2e6748!important}
+.liveRow{display:none}.controller-prompt{font-size:12px;color:#61745a}.dots span{background:#e0e7d9}.dots span.on{background:#40835c}
+#lesson .joy-legend,#tutorial .joy-legend{display:none}.lesson-actions{display:flex;justify-content:center;gap:12px;margin-top:22px;align-items:center}.lesson-actions button{min-width:48px;min-height:48px;border:1px solid #dfe7d7;background:#f1f5e9;color:#355b42;border-radius:14px;padding:10px 16px;font-weight:750}.lesson-actions .next{background:#277b58;color:#fff;border:0;min-width:120px}
+.results h2,.results h3{color:#294c38}.nav-choice{cursor:pointer}.joy-legend{justify-content:center}
+@keyframes gentle-bob{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@media(max-width:550px){.view.center{padding:16px}.panel{padding:24px 18px}#setup h2{font-size:26px}.mode-cards{gap:8px}.difficulty-card{padding:16px 5px;min-height:145px}.difficulty-card small{font-size:10px}.difficulty-emblem{font-size:32px!important}.science-scene{width:290px;height:185px}.science-scene>svg{height:185px}.tutorial-description{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+</style>
+</head>
+<body>
+<!-- START SCREEN -->
+<section class="view center active" id="home">
+ <div class="shell hero">
+  <span class="eyebrow">THE LITTLE SCIENCE CLUB · GRADE 3</span>
+  <div class="science-scene" aria-hidden="true"><span class="science-float atom">⚛</span><span class="science-float plant">🌱</span><span class="science-float flask">🧪</span><svg viewBox="0 0 450 370" aria-hidden="true"><defs>
+        <radialGradient id="blueBall" cx=".28" cy=".2" r=".95"><stop stop-color="#e5fbff"/><stop offset=".26" stop-color="#70caff"/><stop offset=".76" stop-color="#3985e1"/><stop offset="1" stop-color="#19418b"/></radialGradient>
+        <radialGradient id="orangeBall" cx=".27" cy=".2" r=".96"><stop stop-color="#fff2d2"/><stop offset=".3" stop-color="#ffb479"/><stop offset=".78" stop-color="#f2735c"/><stop offset="1" stop-color="#ae3c54"/></radialGradient>
+        <radialGradient id="goldBall"><stop stop-color="#fffce1"/><stop offset=".45" stop-color="#ffe789"/><stop offset="1" stop-color="#f9a544"/></radialGradient>
+      </defs><ellipse cx="225" cy="328" rx="194" ry="31" fill="#05152e" opacity=".35"/>
+      <path d="M 70 270 C 30 185 100 133 185 170 S 345 190 365 120" fill="none" stroke="#123e7f" stroke-width="51" stroke-linecap="round"/><path d="M 70 265 C 31 180 102 131 187 168 S 344 188 365 116" fill="none" stroke="#439bea" stroke-width="42" stroke-linecap="round"/><path d="M 70 257 C 35 175 106 129 189 166 S 342 181 362 112" fill="none" stroke="#9bddff" stroke-width="13" stroke-linecap="round" opacity=".45"/>
+      <path d="M 390 285 C 345 336 290 292 239 268 S 136 245 153 295" fill="none" stroke="#9b3450" stroke-width="51" stroke-linecap="round"/><path d="M 390 278 C 345 328 290 289 239 264 S 137 239 153 288" fill="none" stroke="#ff9365" stroke-width="43" stroke-linecap="round"/><path d="M 389 272 C 344 317 286 280 240 257 S 135 231 150 284" fill="none" stroke="#ffe4ae" stroke-width="12" stroke-linecap="round" opacity=".4"/>
+      <circle cx="365" cy="106" r="37" fill="url(#blueBall)"/><ellipse cx="354" cy="101" rx="9" ry="12" fill="white"/><ellipse cx="381" cy="101" rx="9" ry="12" fill="white"/><circle cx="357" cy="103" r="4" fill="#203452"/><circle cx="384" cy="103" r="4" fill="#203452"/><path d="M356 120Q367 131 379 118" fill="none" stroke="#1a4270" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="153" cy="289" r="36" fill="url(#orangeBall)"/><ellipse cx="140" cy="280" rx="9" ry="12" fill="white"/><ellipse cx="165" cy="280" rx="9" ry="12" fill="white"/><circle cx="142" cy="282" r="4" fill="#344050"/><circle cx="167" cy="282" r="4" fill="#344050"/><path d="M140 306Q154 316 165 303" stroke="#753447" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g transform="translate(222 67)"><circle r="27" fill="#ffe6a7" opacity=".2"/><circle r="21" fill="url(#goldBall)"/><text y="8" text-anchor="middle" font-size="27" fill="#845022" font-weight="900">?</text></g>
+      <g fill="#ffe58c"><circle cx="92" cy="90" r="7"/><circle cx="298" cy="74" r="5"/><circle cx="331" cy="325" r="6"/><circle cx="52" cy="125" r="4"/></g>
+      </svg></div>
+  <div class="hero-copy"><h1>SikLab<span>.io</span></h1><h2>A little science. A big adventure.</h2>
+  <p>Learn something new. Help your snake grow!</p>
+  <button id="homePlay" class="play-button">Let’s play <span aria-hidden="true">→</span></button>
+  <div class="mini-hint">Press Enter or your red controller button</div>
+  <div class="home-chips"><span>🌱 Learn</span><span>🐍 Play</span><span>✨ Grow</span></div>
+  </div>
+  <div class="quiet-status"><span id="deviceP1"></span><span id="deviceP2"></span></div>
+ </div>
+</section>
+<!-- SETUP -->
+<section class="view center" id="setup">
+ <div class="shell narrow glass panel">
+  <div class="controller-ui-header"><div><span class="eyebrow">YOUR NEXT DISCOVERY</span><h2>Choose your adventure</h2></div><span class="tag">🔴 Select &nbsp; · &nbsp; 🟢 Back</span></div>
+  <p class="setup-subtitle">Start small. Get curious. Have fun!</p>
+  <div class="fixed-subject"><span class="fixed-icon">🔬</span><span><strong>SCIENCE</strong><small>Explore the world around you</small></span><span class="fixed-lock">Grade 3</span></div>
+  <div class="legacy"><input id="playerOne" value="Player 1"><input id="playerTwo" value="Player 2">
+   <button class="mode" data-difficulty="easy">Easy</button><button class="mode" data-difficulty="medium">Medium</button><button class="mode" data-difficulty="hard">Hard</button>
+   <button id="setupHome"></button><button id="startGame"></button></div>
+  <div class="mode-cards" id="modeCards" data-menu="setup" aria-label="Choose your game difficulty">
+   <div class="difficulty-card" data-mode="easy"><span class="difficulty-emblem">🌱</span><b>EASY</b><small>A gentle start</small></div>
+   <div class="difficulty-card" data-mode="medium"><span class="difficulty-emblem">⚡</span><b>MEDIUM</b><small>A little challenge</small></div>
+   <div class="difficulty-card" data-mode="hard"><span class="difficulty-emblem">🔥</span><b>HARD</b><small>Ready for more?</small></div>
+  </div>
+  <div class="start-instruction"><button class="play-button" data-trigger="startGame">Let’s explore <span aria-hidden="true">→</span></button></div>
+  <div class="device-indicators device-indicators-small" aria-live="polite"><span class="device-status" id="setupDeviceP1">🔴 Player 1 · Not connected</span><span class="device-status" id="setupDeviceP2">🔴 Player 2 · Not connected</span></div>
+  <div class="fixed-features"><span>🔊 Custom Music + SFX</span><span>🎙️ Teacher Lab Narration · ON</span><span>📚 Science ONLY</span></div>
+  <div class="joy-legend"><span>🕹️ ← →: Difficulty</span><span>🔴 A: Start automatically</span><span>🟢 B: Return home</span></div>
+ </div>
+</section>
+
+<!-- TUTORIAL -->
+
+<section class="view center" id="lesson">
+ <div class="shell narrow glass panel tutorial">
+  <div class="liveRow"><span class="pill">📖 Story Lesson</span><div class="device-live"><span class="live-dot"></span><span id="lessonNarrator">Teacher Lab Narration</span></div></div>
+  <span class="eyebrow" id="lessonEyebrow">Magic Science Story Adventure</span><div class="tutorial-icon" id="lIcon">🚀</div><h2 id="lTitle">Science Story Adventure</h2><p class="tutorial-description" id="lText"></p><div class="fact-box" id="lFact"></div><div class="dots" id="lDots"></div>
+  <div class="legacy"><button id="lessonBack"></button><button id="lessonRepeat"></button><button id="lessonFact"></button><button id="lessonNext"></button></div>
+  <div class="lesson-actions"><button data-trigger="lessonBack" aria-label="Previous page">←</button><button data-trigger="lessonRepeat" aria-label="Listen again">♫</button><button class="next" data-trigger="lessonNext">Next →</button></div>
+  <div class="controller-prompt" id="lessonProgress">Scene 1 of 6</div>
+  <div class="joy-legend"><span>🕹️ Left / Right = Previous or Next scene</span><span>🔴 / 🟡 = Continue</span><span>🟢 = Back</span><span>⚪ = Repeat narration</span><span>🔵 = Hear key fact</span></div>
+ </div>
+</section>
+
+<section class="view center" id="tutorial">
+ <div class="shell narrow glass panel tutorial">
+  <svg class="owl" viewBox="0 0 110 116" aria-hidden="true"><ellipse cx="55" cy="62" rx="40" ry="40" fill="#ca8b55"/><ellipse cx="55" cy="73" rx="26" ry="26" fill="#fce3bc"/><path d="M17 59Q1 76 19 91L32 72M93 59Q109 76 91 91L78 72" fill="#aa6a46"/><circle cx="39" cy="53" r="17" fill="white"/><circle cx="72" cy="53" r="17" fill="white"/><circle cx="43" cy="55" r="8" fill="#273c58"/><circle cx="69" cy="55" r="8" fill="#273c58"/><circle cx="45" cy="52" r="3" fill="white"/><circle cx="71" cy="52" r="3" fill="white"/><path d="M50 68L61 68L55 78Z" fill="#ffc958"/><path d="M55 7L12 25L55 43L98 25Z" fill="#223554"/><path d="M30 35V45Q55 61 81 45V35L55 45Z" fill="#354e70"/><path d="M95 27V52" stroke="#ffd572" stroke-width="3"/><circle cx="95" cy="54" r="4" fill="#ffd572"/><ellipse cx="39" cy="105" rx="10" ry="5" fill="#ffd572"/><ellipse cx="72" cy="105" rx="10" ry="5" fill="#ffd572"/></svg>
+  <span class="eyebrow">Teacher Lab Game Guide</span><div class="tutorial-icon" id="tIcon">🐍</div><h2 id="tTitle">Welcome!</h2><p class="tutorial-description" id="tText"></p><div class="dots" id="tDots"></div>
+  <div class="legacy"><button id="tutorialBack"></button><button id="tutorialRepeat"></button><button id="tutorialNext"></button></div>
+  <div class="lesson-actions"><button data-trigger="tutorialBack" aria-label="Previous page">←</button><button data-trigger="tutorialRepeat" aria-label="Listen again">♫</button><button class="next" data-trigger="tutorialNext">Next →</button></div>
+  <div class="controller-prompt" id="tutorialProgress">Page 1 of 7</div>
+  <div class="joy-legend"><span>🕹️ → / ↓: Next Page · ← / ↑: Previous</span><span>🔴 A / 🟡 E: Next</span><span>🟢 B: Previous</span><span>⚪ C: Replay Voice</span></div>
+ </div>
+</section>
+<!-- GAME -->
+<section class="view game-view" id="game">
+ <div class="game-shell">
+  <header class="game-head"><div class="game-logo">⚡ SikLab<span>.io</span> <span style="font-size:.75rem;font-weight:650;color:#afc6e1">Adventure Park</span></div><div class="legacy"><button id="gamePause"></button><button id="gameRestart"></button><button id="gameExit"></button></div><div class="device-live"><span id="gameDeviceP1" class="device-status">🔴 P1 offline</span><span id="gameDeviceP2" class="device-status">🔴 P2 offline</span></div><div class="tag">🕹️ Steer &nbsp; · &nbsp; 🟡 E: Pause</div></header>
+  <div class="hud">
+   <div class="stat"><div class="name-line"><i class="color-dot"></i><span class="player-name" id="hudName0">Player 1</span></div><div class="numbers">🐍 <b id="length0">5</b> length <span class="little"> · 🧠 <span id="correct0">0</span> correct</span> <span id="status0"></span></div><div class="meter"><span id="meter0"></span></div></div>
+   <div class="timer"><span class="small">TIME LEFT</span><strong id="gameClock">03:00</strong><span class="small" id="modeLabel">EASY MODE</span></div>
+   <div class="stat right"><div class="name-line"><span class="player-name" id="hudName1">Player 2</span><i class="color-dot orange"></i></div><div class="numbers">🐍 <b id="length1">5</b> length <span class="little"> · 🧠 <span id="correct1">0</span> correct</span> <span id="status1"></span></div><div class="meter"><span id="meter1"></span></div></div>
+  </div>
+  <div class="arena-wrap"><canvas id="arena" width="1176" height="672" aria-label="SikLab.io shared Science Snake Arena controlled by two IoT joysticks"></canvas>
+   <div class="overlay" id="quizOverlay"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="quizTitle"><div class="q-info"><span class="q-person" id="questionPlayer">🔵 Player 1's question</span><span class="quiz-timer" id="quizTimer">🔊 Listening…</span></div><span class="q-tag" id="questionCategory">SCIENCE · EASY</span><div class="q-text" id="quizTitle"></div><div class="answers" id="answers"></div><div class="feedback" id="quizFeedback" aria-live="polite"></div><div class="muted" id="quizHint">🔊 Teacher Lab reads the question and choices; timer begins after narration.</div></div></div>
+   <div class="overlay" id="pauseOverlay"><div class="modal msg"><span class="eyebrow">Game paused</span><h2>⏸ Paused</h2><p>Both snakes and the timer are frozen.</p><div class="legacy"><button id="resumeGame"></button></div>
+    <div class="menu-stack" data-menu="pause"><div class="nav-choice" data-nav="resume"><span class="num">▶</span><span class="nav-copy"><b>Resume Match</b></span></div><div class="nav-choice" data-nav="restart"><span class="num">↻</span><span class="nav-copy"><b>Restart Match</b></span></div><div class="nav-choice" data-nav="exit"><span class="num">⌂</span><span class="nav-copy"><b>Back to Home</b></span></div></div>
+    <div class="joy-legend"><span>🕹️ ↑↓ Select</span><span>🔴 A: Confirm</span><span>🟢 B / 🟡 E: Resume</span></div></div></div>
+  </div>
+  <div class="footnote"><span>🕹️ Player 1 + Player 2: steer using your own joystick &nbsp; 🟡 Yellow: Pause</span><span>During Quiz: 🔴 A &nbsp; 🟢 B &nbsp; ⚪ C &nbsp; 🔵 D &nbsp; 🟡 E</span></div>
+ </div>
+</section>
+<!-- RESULTS -->
+<section class="view center" id="results">
+ <div class="shell narrow glass panel results"><div class="trophy" id="resultTrophy">🏆</div><span class="eyebrow">Match completed</span><h2 id="resultTitle">Winner!</h2><p id="resultSub">You played, learned, and explored like a young scientist!</p>
+  <div class="result-grid" id="resultCards"></div><div class="lesson-summary"><h3>📚 Learning summary</h3><p id="learningSummary"></p><div class="review" id="wrongReview"></div></div>
+  <div class="legacy"><button id="playAgain"></button><button id="backSetup"></button><button id="exportResults"></button><button id="resultsHome"></button></div>
+  <div class="menu-stack" data-menu="results"><div class="nav-choice" data-nav="rematch"><span class="num">↻</span><span class="nav-copy"><b>Play Again</b></span></div><div class="nav-choice" data-nav="change"><span class="num">⚡</span><span class="nav-copy"><b>Change Difficulty</b></span></div><div class="nav-choice" data-nav="download"><span class="num">↓</span><span class="nav-copy"><b>Save Learning Report</b></span></div><div class="nav-choice" data-nav="home"><span class="num">⌂</span><span class="nav-copy"><b>Return Home</b></span></div></div>
+  <div class="joy-legend"><span>🕹️ ↑↓ Select</span><span>🔴 A: Confirm</span><span>🟢 B: Home</span><span>🟡 E: Rematch</span></div>
+ </div>
+</section>
+
+<script>
+'use strict';
+// The game, questions and graphics work offline. Optional IoT devices use browser Gamepad, WebSerial or local WebSocket connectivity.
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const W = 1176, H = 672, CELL = 28, COLS = W/CELL, ROWS = H/CELL;
+const MATCH_SECONDS = 180, START_LENGTH = 5;
+const BUTTON_NAMES=['A','B','C','D','E'];
+const MODES = {
+ easy:{step:175,rocks:8,questionTime:20},
+ medium:{step:128,rocks:16,questionTime:15},
+ hard:{step:94,rocks:26,questionTime:12}
+};
+const SKINS = [
+ {light:'#d5f8ff',base:'#54b2fa',dark:'#2472ca',edge:'#123e91',spark:'#87d9ff'},
+ {light:'#fff0be',base:'#ff9f70',dark:'#e36663',edge:'#993c53',spark:'#ffd3a0'}
+];
+const Q=(category,difficulty,question,options,correct,explanation)=>{const choices=options.split('|');if(choices.length!==5||correct<0||correct>=5)throw Error('Questions must have five options (A–E)');return {category,difficulty,question,options:choices,correct,explanation};};
+const QUESTIONS = [
+  // EASY: basic living things, earth science, human body and matter.
+  Q('Science','easy','Which planet is known as the Red Planet?','Earth|Mars|Jupiter|Venus|Saturn',1,'Mars looks red because its surface contains iron oxide.'),
+  Q('Science','easy','Which animal is a mammal?','Shark|Frog|Dolphin|Eagle|Crocodile',2,'Dolphins breathe air and feed milk to their young.'),
+  Q('Science','easy','Which gas does the human body use for breathing?','Oxygen|Helium|Carbon dioxide|Neon|Argon',0,'Our cells use oxygen to release energy from food.'),
+  Q('Science','easy','How many legs does an adult insect have?','Four|Eight|Ten|Six|Twelve',3,'Adult insects have three pairs of legs.'),
+  Q('Science','easy','Which part of a plant usually absorbs water from the soil?','Flower|Root|Leaf|Fruit|Seed',1,'Roots absorb water and dissolved minerals.'),
+  Q('Science','easy','What star is at the center of our solar system?','Polaris|Sirius|The Sun|Vega|Betelgeuse',2,'Earth and the other planets orbit the Sun.'),
+  Q('Science','easy','What is the usual state of ice?','Gas|Plasma|Liquid|Solid|Vapor',3,'Ice is water in its solid state.'),
+  Q('Science','easy','Which sense organ helps us hear sounds?','Ear|Eye|Nose|Tongue|Skin',0,'The ears detect vibrations that we hear as sound.'),
+  Q('Science','easy','What do caterpillars usually grow into?','Frogs|Butterflies or moths|Fish|Birds|Spiders',1,'Caterpillars are the larval stage of butterflies and moths.'),
+  Q('Science','easy','What force makes dropped objects fall toward Earth?','Friction|Sound|Heat|Light|Gravity',4,'Gravity pulls objects toward Earth.'),
+  Q('Science','easy','Which body organ pumps blood?','Stomach|Brain|Heart|Lung|Kidney',2,'The heart pumps blood through the circulatory system.'),
+  Q('Science','easy','Which is a natural source of light?','Mirror|Moon|Book|Sun|Rock',3,'The Sun produces its own light; the Moon reflects sunlight.'),
+  // MEDIUM: basic chemistry, astronomy, ecosystems and physical science.
+  Q('Science','medium','What is the common name of H₂O?','Salt|Water|Air|Sugar|Oil',1,'Water has two hydrogen atoms and one oxygen atom.'),
+  Q('Science','medium','Which planet is best known for its visible rings?','Saturn|Mars|Mercury|Earth|Venus',0,'Saturn has bright rings made largely of ice particles.'),
+  Q('Science','medium','Which force opposes motion between touching surfaces?','Gravity|Magnetism|Friction|Buoyancy|Light',2,'Friction resists sliding between contacting surfaces.'),
+  Q('Science','medium','At sea level, pure water boils at about what temperature?','90 °C|100 °C|80 °C|120 °C|110 °C',1,'Water boils at around 100 °C under standard atmospheric pressure.'),
+  Q('Science','medium','What gas do plants take in during photosynthesis?','Oxygen|Nitrogen|Helium|Carbon dioxide|Hydrogen',3,'Plants use carbon dioxide, water, and light to produce sugars.'),
+  Q('Science','medium','Which blood cells help fight infections?','Red blood cells|Platelets|White blood cells|Nerve cells|Bone cells',2,'White blood cells defend the body against pathogens.'),
+  Q('Science','medium','What is the process called when liquid water becomes water vapor?','Freezing|Evaporation|Melting|Condensation|Deposition',1,'Evaporation changes liquid water into gas.'),
+  Q('Science','medium','What instrument is commonly used to measure temperature?','Barometer|Anemometer|Compass|Thermometer|Ruler',3,'A thermometer measures temperature.'),
+  Q('Science','medium','What type of energy does a moving object have?','Kinetic|Chemical|Nuclear|Elastic potential|Thermal only',0,'Kinetic energy is the energy of motion.'),
+  Q('Science','medium','Which organ is mainly responsible for gas exchange in humans?','Liver|Stomach|Kidney|Heart|Lungs',4,'The lungs exchange oxygen and carbon dioxide.'),
+  Q('Science','medium','Which Earth layer is located immediately beneath the crust?','Core|Ocean|Mantle|Atmosphere|Inner core',2,'The mantle is the thick layer below Earth’s crust.'),
+  Q('Science','medium','Which is an example of a renewable energy source?','Coal|Sunlight|Diesel|Natural gas|Gasoline',1,'Sunlight is naturally replenished and can power solar panels.'),
+  // HARD: cell processes, chemistry, physics, geology and astronomy.
+  Q('Science','hard','Which organelle is a major site of ATP production in animal cells?','Nucleus|Mitochondrion|Golgi apparatus|Cell wall|Ribosome',1,'Mitochondria produce much of the ATP used by animal cells.'),
+  Q('Science','hard','What chemical symbol represents gold?','Go|Gd|Au|Ag|Pt',2,'Au is derived from the Latin word aurum.'),
+  Q('Science','hard','What is the approximate pH of pure water at 25 °C?','2|5|9|7|12',3,'Pure water is neutral and has a pH of approximately 7 at 25 °C.'),
+  Q('Science','hard','Which particle has a negative electric charge?','Proton|Neutron|Positron|Alpha particle|Electron',4,'Electrons have a negative charge.'),
+  Q('Science','hard','Which planet has the largest average orbital distance from the Sun?','Neptune|Saturn|Mars|Uranus|Jupiter',0,'Neptune is the farthest planet from the Sun in the eight-planet model.'),
+  Q('Science','hard','Which type of chemical bond involves sharing electrons?','Ionic|Covalent|Metallic|Hydrogen bond|Magnetic',1,'Covalent bonds involve atoms sharing electron pairs.'),
+  Q('Science','hard','What is the SI unit of electrical resistance?','Ampere|Volt|Ohm|Watt|Joule',2,'Electrical resistance is measured in ohms (Ω).'),
+  Q('Science','hard','Which molecule carries most hereditary information in living organisms?','ATP|RNA only|Glucose|DNA|Oxygen',3,'DNA stores hereditary genetic information in most organisms.'),
+  Q('Science','hard','What process changes a solid directly into a gas?','Melting|Freezing|Condensation|Deposition|Sublimation',4,'Sublimation is the direct transition from solid to gas.'),
+  Q('Science','hard','Which seismic waves generally travel fastest through Earth?','P waves|S waves|Surface waves|Ocean waves|Sound in air',0,'Primary or P waves usually travel faster than other seismic waves.'),
+  Q('Science','hard','What is the approximate acceleration due to gravity near Earth’s surface?','3.7 m/s²|9.8 m/s²|15 m/s²|1.6 m/s²|24 m/s²',1,'Earth’s gravitational acceleration is about 9.8 meters per second squared.'),
+  Q('Science','hard','Which part of a neuron usually receives incoming signals?','Axon terminal|Myelin sheath|Dendrite|Synaptic cleft|Axon hillock',2,'Dendrites typically receive signals from other nerve cells.')
+];
+const TEACHER_STEPS = [
+ {icon:'👩‍🏫',title:'Welcome! Meet Teacher Lab',text:'Hello young scientists! Welcome to SikLab.io! I am Teacher Lab, and I’ll guide you through this exciting Science adventure. In this game, two players will compete to grow the longest snake, collect food, answer Science questions correctly, and avoid obstacles. Are you ready? Let’s begin!'},
+ {icon:'🐍',title:'How to win the Science Battle',text:'Two players battle inside one shared arena. Grow your snake longer than your rival before the three-minute timer runs out. Have fun, stay curious, and learn Science while you play!'},
+ {icon:'🕹️',title:'One joystick, five buttons!',text:'Each player has one joystick and five colored buttons. In the menus, steer the joystick to highlight options and press RED to select. During the match, steer the snake with your joystick. Player One is blue, Player Two is orange.'},
+ {icon:'🍎',title:'Food makes you longer!',text:'Catch regular glowing food to gain one body segment. Food gives you steady growth without interrupting the match. Both players hunt the same food!'},
+ {icon:'🔴',title:'Five buttons, five answers!',text:'All questions are about Science! Press RED for answer A, GREEN for B, WHITE for C, BLUE for D, and YELLOW for E. Use the joystick left or right to change tutorial pages. Press RED or YELLOW to move forward, GREEN to review a previous page, and WHITE to repeat my explanation. During gameplay, YELLOW pauses. A correct answer grows your snake by five segments!'},
+ {icon:'🪨',title:'Watch out for collisions!',text:'Hitting rocks, walls, your own tail or the other snake can kill you. Your snake explodes into tasty pellets. You respawn in three seconds with five segments and a temporary contact shield.'},
+ {icon:'🏆',title:'Finish the guide and play!',text:'After three minutes of active gameplay, the longest living snake wins! Ties use correct Science answers and then fewer deaths. Your final report shows accuracy and questions you missed. On this last page, press RED or YELLOW to begin your match. Good luck!'}
+];
+
+const LESSON_STORIES = {
+ easy:[
+  {icon:'🚀',title:'Mission: Explore and Observe',text:'Teacher Lab welcomes the young scientists on a beginner science mission. The class will explore space, animals, plants, the human body, and simple forces. Every clue in this story can help you answer questions in the game.',fact:'Listen for key facts. In Easy mode, the lesson focuses on basic life science, Earth and space, and simple body functions.'},
+  {icon:'🪐',title:'A trip around space',text:'Our spaceship first visits the solar system. Mars is called the Red Planet because iron on its surface makes it look reddish. The Sun is the star at the center of our solar system, and it is also a natural source of light.',fact:'Remember these: Mars is the Red Planet, the Sun is at the center of the solar system, and the Sun is a natural source of light.'},
+  {icon:'🐬',title:'Living things around us',text:'Next, Teacher Lab points to different animals. A dolphin is a mammal because it breathes air and feeds milk to its young. A caterpillar can grow into a butterfly or a moth. Adult insects have six legs, not four or eight.',fact:'Key idea: dolphin equals mammal, caterpillar becomes a butterfly or moth, and insects have six legs.'},
+  {icon:'🌱',title:'Plants and water',text:'In the garden, roots pull water and minerals from the soil. Plants need water to live and grow. Teacher Lab also shows that ice is simply water in its solid state.',fact:'Roots absorb water from the soil, and ice is solid water.'},
+  {icon:'🫁',title:'Your amazing body',text:'Now the lesson moves to the human body. We use oxygen when we breathe. Our ears help us hear sounds, and our heart pumps blood throughout the body.',fact:'Key body facts: oxygen is used for breathing, ears hear sound, and the heart pumps blood.'},
+  {icon:'🌍',title:'Forces on Earth',text:'At the end of the story, Teacher Lab drops a ball. It falls because of gravity, the force that pulls objects toward Earth. All of these facts may appear in your Science snake battle, so keep them in mind!',fact:'Gravity pulls things downward toward Earth. You are now ready for the tutorial and the game.'}
+ ],
+ medium:[
+  {icon:'🔬',title:'Mission: Science Explorer',text:'Teacher Lab begins a medium-level Science mission. In this lesson, you will review matter, temperature, plants, blood, energy, and Earth science. These ideas connect directly to the questions you may answer later.',fact:'Medium mode asks about common scientific processes, instruments, and systems in nature and the human body.'},
+  {icon:'💧',title:'Water and temperature',text:'Teacher Lab pours water into a beaker and explains that H two O is the common name for water. At sea level, pure water boils at about one hundred degrees Celsius. When liquid water changes into water vapor, the process is called evaporation.',fact:'Water is H two O, boiling point at sea level is 100 degrees Celsius, and liquid to gas is evaporation.'},
+  {icon:'🪐',title:'Planets, layers, and forces',text:'The journey continues into space and inside Earth. Saturn is famous for its rings. Friction is the force that resists motion between touching surfaces. Beneath Earth’s crust lies the mantle, a thick layer of hot rock.',fact:'Saturn has rings, friction opposes motion, and the mantle lies below the crust.'},
+  {icon:'🌿',title:'Plants and renewable energy',text:'In the school garden, Teacher Lab reminds the class that plants take in carbon dioxide during photosynthesis. Nearby solar panels show a renewable energy source because sunlight is naturally replaced.',fact:'Plants use carbon dioxide during photosynthesis, and sunlight is a renewable energy source.'},
+  {icon:'🩸',title:'Body defenses and breathing',text:'Inside the body, white blood cells help fight infections. The lungs are mainly responsible for gas exchange, moving oxygen into the body and carbon dioxide out.',fact:'White blood cells fight infection, and the lungs exchange gases.'},
+  {icon:'🌡️',title:'Measuring and moving',text:'Before the mission ends, Teacher Lab holds up a thermometer to measure temperature. Then a rolling cart demonstrates kinetic energy, which is the energy of motion. These ideas will help you answer medium Science questions.',fact:'A thermometer measures temperature, and a moving object has kinetic energy.'}
+ ],
+ hard:[
+  {icon:'🧪',title:'Mission: Advanced Science Challenge',text:'Teacher Lab now leads an advanced lesson. Hard mode connects cell biology, chemistry, physics, electricity, Earth science, and space. Pay close attention because the questions will be more challenging.',fact:'Hard mode expects deeper understanding of scientific terms, units, particles, and biological structures.'},
+  {icon:'🔋',title:'Cells and heredity',text:'Inside an animal cell, mitochondria are major sites of ATP production, helping cells release usable energy. In most living organisms, DNA carries hereditary information from one generation to the next. In a neuron, dendrites usually receive incoming signals from other cells.',fact:'Mitochondria make ATP, DNA stores hereditary information, and dendrites receive signals.'},
+  {icon:'⚗️',title:'Chemistry basics',text:'Teacher Lab opens the chemistry notebook. Gold uses the chemical symbol A U, from the Latin word aurum. Pure water at twenty-five degrees Celsius has a pH of about seven, which is neutral. A covalent bond forms when atoms share electrons. A solid changing directly into gas is called sublimation.',fact:'Gold is Au, pure water has pH 7, covalent bonds share electrons, and solid to gas is sublimation.'},
+  {icon:'⚡',title:'Charge, resistance, and gravity',text:'The class studies physics next. Electrons carry a negative electric charge. Electrical resistance is measured in ohms. Near Earth’s surface, gravity causes an acceleration of about nine point eight meters per second squared.',fact:'Electron equals negative charge, resistance is measured in ohms, and Earth gravity is about 9.8 meters per second squared.'},
+  {icon:'🌊',title:'Waves and Earth',text:'When an earthquake occurs, P waves generally travel faster through Earth than S waves and surface waves. Understanding Earth processes helps scientists learn what happens below the ground.',fact:'P waves are the fastest common seismic waves in Earth.'},
+  {icon:'🪐',title:'Outer space review',text:'Teacher Lab points to the distant planets. In the eight-planet model, Neptune has the largest average orbital distance from the Sun. These advanced facts will appear in your Science snake battle, so think carefully and stay calm.',fact:'Neptune is the farthest planet from the Sun in the eight-planet model. You are now ready for the tutorial and match.'}
+ ]
+};
+const DEFAULT_CONFIG={names:['Player 1','Player 2'],subject:'Science',difficulty:'easy',sound:true,voice:true};
+
+let config={...DEFAULT_CONFIG};
+try { const loaded=JSON.parse(localStorage.getItem('siklab_io_settings')||'{}'); config={...config,...loaded}; if(!Array.isArray(config.names)||config.names.length!==2)config.names=['Player 1','Player 2']; if(!MODES[config.difficulty])config.difficulty='easy'; } catch(e){}
+// Lock subject and audio regardless of settings saved by older versions.
+config.subject='Science';config.sound=true;config.voice=true;
+function saveConfig(){try{localStorage.setItem('siklab_io_settings',JSON.stringify(config))}catch(e){}}
+let screen='home', tutorialIndex=0, lessonIndex=0, lessonScenes=[], game=null, particles=[], lastFrame=0, padPrevious=new Map(), lastHudAt=0;
+const canvas=$('#arena'),ctx=canvas.getContext('2d');
+const key=p=>p.x+','+p.y, equal=(a,b)=>a&&b&&a.x===b.x&&a.y===b.y;
+const random=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const randItem=arr=>arr[Math.floor(Math.random()*arr.length)];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function show(id){stopVoice(); screen=id; $$('.view').forEach(v=>v.classList.toggle('active',v.id===id));window.scrollTo(0,0);if(id==='home'||id==='setup'||id==='lesson'||id==='tutorial')sound.setMode('menu');else if(id==='results')sound.setMode('results');onNavScreen(id);refreshIoStatus();}
+const sound={ctx:null,musicGain:null,musicTimer:null,nextBeat:0,beatIndex:0,mode:'menu',
+ init(){try{if(!this.ctx){this.ctx=new (window.AudioContext||window.webkitAudioContext)();this.musicGain=this.ctx.createGain();this.musicGain.gain.value=.40;this.musicGain.connect(this.ctx.destination);}
+ if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{});if(!this.musicTimer)this.startMusic();}catch(e){}},
+ tone(f,d=.12,type='sine',delay=0,gain=.09,route=null){if(!this.ctx)return;const c=this.ctx,t=c.currentTime+delay,o=c.createOscillator(),v=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);v.gain.setValueAtTime(Math.max(.0001,gain),t);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v);v.connect(route||c.destination);o.start(t);o.stop(t+d+.02)},
+ sequence(a){a.forEach((f,i)=>this.tone(f,.13,'triangle',i*.105))},
+ eat(){this.sequence([630,875])},quiz(){this.sequence([515,665,825])},good(){this.sequence([523,660,785,1050])},bad(){this.sequence([330,230])},hit(){this.tone(125,.3,'sawtooth',0,.055)},win(){this.sequence([523,659,784,1047,1320])},
+ nav(){this.tone(520,.055,'sine',0,.04)},select(){this.sequence([550,750,950])},
+ countdown(n){this.tone(n===1?720:480,.16,'square',0,.055);this.tone(n===1?1050:620,.15,'sine',.035,.035)},
+ go(){this.sequence([523,784,1046,1568]);this.tone(784,.40,'triangle',.12,.13)},
+ setMode(mode){if(this.mode===mode)return;this.mode=mode;this.nextBeat=0;this.beatIndex=0;},
+ duck(on){if(this.musicGain&&this.ctx)this.musicGain.gain.setTargetAtTime(on?.11:.48,this.ctx.currentTime,.15)},
+ startMusic(){if(this.musicTimer)return;const melody=[0,4,7,12,7,4,2,7,0,4,9,12,9,5,4,2,0,3,7,10,7,3,2,7,5,9,12,14,12,9,7,4];
+ const step=()=>{if(!this.ctx||this.ctx.state!=='running')return;const now=this.ctx.currentTime;if(this.customMusicActive){this.nextBeat=now+.04;return;}if(!this.nextBeat||this.nextBeat<now-.1)this.nextBeat=now+.04;
+ while(this.nextBeat<now+.22){const i=this.beatIndex++,fast=this.mode==='game',quiz=this.mode==='quiz',pause=this.mode==='paused',bpm=fast?137:quiz?100:pause?76:109,base=fast?220:quiz?196:164,n=melody[i%melody.length],t=this.nextBeat-now;
+ this.tone(base*Math.pow(2,n/12),.20,fast?'triangle':'sine',t,quiz?.012:.018,this.musicGain);
+ if(i%4===0)this.tone(base/2,.45,'sine',t,.018,this.musicGain);
+ if(fast&&i%2===0)this.tone(110,.045,'triangle',t,.007,this.musicGain);
+ this.nextBeat+=60/bpm/2;
+ }};
+ this.musicTimer=setInterval(step,100);step();}
+};
+
+/* ============================================================
+   CUSTOM OFFLINE AUDIO ASSETS - SikLab.io
+   Replace the files in /audio with your own MP3, WAV, or OGG.
+   To use a different extension, edit its path below.
+   No audio uploads, internet calls, mouse or extra IoT buttons.
+   Science text-to-speech is intentionally handled separately.
+   Missing/unplayable tracks automatically use original synth SFX/BGM.
+   ============================================================ */
+const AUDIO_FILES = Object.freeze({
+  music: {
+    menu:    'audio/music-menu.mp3',
+    game:    'audio/music-game.mp3',
+    quiz:    'audio/music-quiz.mp3',
+    paused:  'audio/music-paused.mp3',
+    results: 'audio/music-results.mp3'
+  },
+  effects: {
+    nav:        'audio/sfx-nav.mp3',
+    select:     'audio/sfx-select.mp3',
+    eat:        'audio/sfx-eat.mp3',
+    quiz:       'audio/sfx-knowledge.mp3',
+    good:       'audio/sfx-correct.mp3',
+    bad:        'audio/sfx-wrong.mp3',
+    hit:        'audio/sfx-collision.mp3',
+    win:        'audio/sfx-victory.mp3',
+    respawn:    'audio/sfx-respawn.mp3',
+    countdown3: 'audio/sfx-countdown-3.mp3',
+    countdown2: 'audio/sfx-countdown-2.mp3',
+    countdown1: 'audio/sfx-countdown-1.mp3',
+    go:         'audio/sfx-go.mp3'
+  },
+  musicVolume: .26,       // Range 0.0 to 1.0
+  effectsVolume: .76,     // Range 0.0 to 1.0
+  narrationDucking: .17, // Music volume multiplier during teacher/question voice
+  fadeMs: 300
+});
+const customAudio = {
+  ready: false, music:{}, effects:{}, current:null, activeKey:null,
+  mutedForVoice:false, fadeTokens:new Map(),
+  preload(){
+    if(this.ready)return;
+    this.ready=true;
+    for(const category of ['music','effects']) {
+      for(const [key,path] of Object.entries(AUDIO_FILES[category])) {
+        const element = new Audio(path);
+        element.preload='auto';
+        if(category==='music')element.loop=true;
+        const record={element,path,loaded:false,failed:false,key};
+        this[category][key]=record;
+        element.addEventListener('canplay',()=>{
+          record.loaded=true;record.failed=false;
+          if(category==='music' && sound.ctx?.state==='running' &&
+             (sound.mode==='countdown'?'game':sound.mode)===key){this.syncMusic(sound.mode);}
+        });
+        element.addEventListener('error',()=>{
+          record.failed=true;record.loaded=false;
+          if(category==='music'&&this.current?.element===element){
+            this.stopMusic();
+          }
+        });
+        try{element.load();}catch(err){record.failed=true;}
+      }
+    }
+  },
+  fade(element,target,ms=AUDIO_FILES.fadeMs,done=null){
+    const token=Symbol();this.fadeTokens.set(element,token);
+    const initial=element.volume,start=performance.now();
+    const frame=now=>{
+      if(this.fadeTokens.get(element)!==token)return;
+      const t=Math.min(1,(now-start)/Math.max(1,ms));
+      const ease=t*t*(3-2*t);
+      element.volume=Math.min(1,Math.max(0,initial+(target-initial)*ease));
+      if(t<1)requestAnimationFrame(frame);
+      else if(done)done();
+    };
+    requestAnimationFrame(frame);
+  },
+  targetVolume(){
+    return AUDIO_FILES.musicVolume*(this.mutedForVoice?AUDIO_FILES.narrationDucking:1);
+  },
+  duck(on){this.mutedForVoice=!!on;if(this.current)this.fade(this.current.element,this.targetVolume(),180);},
+  stopMusic(){
+    const former=this.current;
+    this.current=null;this.activeKey=null;sound.customMusicActive=false;
+    if(former){this.fade(former.element,0,180,()=>{
+      if(this.current?.element!==former.element){former.element.pause();former.element.currentTime=0;}
+    });}
+  },
+  syncMusic(mode){
+    this.preload();
+    const key=mode==='countdown'?'game':mode;
+    const record=this.music[key];
+    if(!record||!record.loaded){
+      if(this.current?.key!==key)this.stopMusic();
+      return;
+    }
+    if(this.current?.key===key){
+      if(this.current.element.paused){this.tryPlay(record);}else this.fade(record.element,this.targetVolume(),180);
+      return;
+    }
+    this.stopMusic();
+    this.current=record;
+    record.element.volume=0;
+    record.element.currentTime=0;
+    this.tryPlay(record);
+  },
+  tryPlay(record){
+    let attempt;
+    try{attempt=record.element.play();}
+    catch(err){if(this.current===record)this.stopMusic();return;}
+    Promise.resolve(attempt).then(()=>{
+      if(this.current!==record){record.element.pause();return;}
+      this.activeKey=record.key;
+      sound.customMusicActive=true;
+      this.fade(record.element,this.targetVolume());
+    }).catch(()=>{
+      if(this.current===record)this.stopMusic();
+    });
+  },
+  effect(name){
+    this.preload();
+    const record=this.effects[name];
+    if(!record?.loaded)return false;
+    try{
+      const element=record.element.cloneNode(true);
+      element.volume=AUDIO_FILES.effectsVolume;
+      element.currentTime=0;
+      const result=element.play();
+      if(result?.catch)result.catch(()=>{});
+      element.addEventListener('ended',()=>{element.removeAttribute('src');element.load();},{once:true});
+      return true;
+    }catch(e){return false;}
+  },
+  status(){return {
+    mode:sound.mode,customMusicPlaying:!!sound.customMusicActive,
+    musicTrack:this.activeKey,voiceDucking:this.mutedForVoice,
+    readyMusic:Object.keys(this.music).filter(x=>this.music[x].loaded),
+    readyEffects:Object.keys(this.effects).filter(x=>this.effects[x].loaded),
+    missingOrUnsupported:[...Object.values(this.music),...Object.values(this.effects)].filter(x=>x.failed).map(x=>x.path)
+  };}
+};
+
+// Prefer custom sounds. If a file is absent, preserve the tested built-in tones.
+for(const method of ['eat','quiz','good','bad','hit','win','nav','select','go']){
+  const original=sound[method].bind(sound);
+  sound[method]=(...args)=>{if(!customAudio.effect(method))original(...args);};
+}
+const originalCountdown=sound.countdown.bind(sound);
+sound.countdown=n=>{if(!customAudio.effect('countdown'+n))originalCountdown(n);};
+sound.respawn=()=>{
+  if(!customAudio.effect('respawn'))sound.sequence([440,590,880]);
+};
+const originalInit=sound.init.bind(sound);
+sound.init=()=>{customAudio.preload();originalInit();customAudio.syncMusic(sound.mode);};
+const originalMode=sound.setMode.bind(sound);
+sound.setMode=mode=>{originalMode(mode);if(customAudio.ready)customAudio.syncMusic(mode);};
+const originalDuck=sound.duck.bind(sound);
+sound.duck=on=>{originalDuck(on);customAudio.duck(on);};
+customAudio.preload();
+window.siklabAudioStatus=()=>customAudio.status();
+
+window.addEventListener('pointerdown',()=>sound.init(),{once:true});window.addEventListener('keydown',()=>sound.init(),{once:true});
+// Offline voice policy: prefer locally installed natural-sounding English female voices.
+// High-quality human narration can be added as MP3/WAV/OGG clips in audio/voice/.
+// The game never requires a network speech service. If a clip is absent, local
+// browser speech synthesis is used, and the quiz continues if no voice exists.
+let speechToken=0, activeVoiceAudio=null, selectedNarratorName='Browser voice unavailable';
+const FEMALE_VOICE=/jenny|aria|zira|samantha|victoria|karen|moira|fiona|tessa|serena|ava|susan|hazel|sonia|natasha|salli|joanna|emma|female|woman|libby|maisie|amy|olivia|allison/i;
+const MALE_VOICE=/david|guy|brian|george|james|daniel|male|man|aaron|ryan|matthew|thomas|arthur/i;
+function chooseNarrator(){
+ if(!('speechSynthesis' in window))return null;
+ const available=speechSynthesis.getVoices().filter(v=>/^en(?:-|$)/i.test(v.lang||''));
+ if(!available.length)return null;
+ const grade=v=>{
+  const n=v.name||'';
+  return (v.localService?110:0)+(/natural|neural|premium|enhanced/i.test(n)?45:0)
+   +(FEMALE_VOICE.test(n)?90:0)-(MALE_VOICE.test(n)?120:0)
+   +(/en-US|en-GB|en-AU/i.test(v.lang||'')?10:0)
+   -(/espeak|robot|compact/i.test(n)?45:0);
+ };
+ const voice=available.sort((a,b)=>grade(b)-grade(a))[0];
+ selectedNarratorName=voice.name;
+ return voice;
+}
+window.siklabNarratorInfo=()=>({selectedVoice:chooseNarrator()?.name||'None',requiresOnline:false,
+ recordingSupport:'Custom narration is supported for lesson scenes named lesson-easy-01.mp3, lesson-medium-01.mp3, lesson-hard-01.mp3 and so on, plus tutorial pages tutorial-01.mp3 through tutorial-07.mp3. Science quizzes use automatic speech unless individual question audio is supplied.',
+ info:'Voice quality depends on locally available browser/OS voices. Realistic human sound requires recorded voice files.'});
+function stopVoice(){
+ speechToken++;
+ if(activeVoiceAudio){try{activeVoiceAudio.pause();activeVoiceAudio.removeAttribute('src');activeVoiceAudio.load()}catch(e){}activeVoiceAudio=null;}
+ sound.duck(false);
+ try{if('speechSynthesis' in window)speechSynthesis.cancel()}catch(e){}
+}
+function speak(text,onDone=null,recordedPath=null){
+ stopVoice();const token=speechToken;sound.duck(true);
+ let finished=false, safety=null;
+ const done=()=>{if(finished||token!==speechToken)return;finished=true;if(safety)clearTimeout(safety);sound.duck(false);if(onDone)onDone();};
+ const useSpeech=()=>{
+  if(token!==speechToken)return;
+  if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){done();return;}
+  try{
+   const u=new SpeechSynthesisUtterance(text);
+   u.lang='en-US';u.rate=.93;u.pitch=1.02;u.volume=1;
+   const female=chooseNarrator();if(female)u.voice=female;
+   u.onend=done;u.onerror=done;
+   speechSynthesis.speak(u);
+   // If no OS voice responds, the countdown/quiz must still be playable.
+   if(onDone)safety=setTimeout(done,45000);
+  }catch(e){done();}
+ };
+ if(recordedPath){
+  try{
+   const a=new Audio(recordedPath);activeVoiceAudio=a;a.preload='auto';a.volume=1;
+   a.onended=()=>{if(activeVoiceAudio===a)activeVoiceAudio=null;done();};
+   let started=false;
+   const fallback=()=>{if(started||token!==speechToken)return;started=true;if(activeVoiceAudio===a)activeVoiceAudio=null;try{a.pause()}catch(e){}useSpeech();};
+   a.onerror=fallback;
+   const playing=a.play();
+   if(playing?.catch)playing.catch(fallback);
+   return;
+  }catch(e){ /* Recording is optional; use computer's female voice. */ }
+ }
+ useSpeech();
+}
+// A recorded female voice may narrate Science questions and options in any order.
+// q01-question.mp3, q01-option-1.mp3 .. q01-option-5.mp3 refer to the
+// original question bank order; the shuffled on-screen A-E order is respected.
+function speakScienceQuestion(q,onDone){
+ const fullNarration=q.question+'. '+q.options.map((choice,i)=>'Option '+BUTTON_NAMES[i]+'. '+choice+'.').join(' ');
+ const clipPrefix=`audio/voice/q${String(q.sourceId).padStart(2,'0')}`;
+ const thisQuiz=game?.quiz;
+ const stillActive=()=>game?.quiz===thisQuiz&&thisQuiz?.reading&&!thisQuiz.done;
+ // Without recorded audio, read the entire question in one continuous, natural-paced utterance.
+ // With recorded files, play the human voice clips in the *shuffled* answer order.
+ let decided=false;
+ const fallback=()=>{if(decided||!stillActive())return;decided=true;speak(fullNarration,onDone);};
+ const useRecordings=()=>{
+  if(decided||!stillActive())return;decided=true;
+  const parts=[{text:q.question,path:clipPrefix+'-question.mp3'}];
+  q.options.forEach((choice,i)=>parts.push({text:`Option ${BUTTON_NAMES[i]}. ${choice}.`,path:`${clipPrefix}-option-${q.sourceOptionIds[i]}.mp3`}));
+  let i=0;const next=()=>{if(!stillActive())return;if(++i>=parts.length){if(onDone)onDone();return;}speak(parts[i].text,next,parts[i].path);};
+  speak(parts[0].text,next,parts[0].path);
+ };
+ try{
+  const probe=new Audio();probe.preload='metadata';
+  probe.addEventListener('loadedmetadata',useRecordings,{once:true});
+  probe.addEventListener('error',fallback,{once:true});
+  probe.src=clipPrefix+'-question.mp3';probe.load();
+  setTimeout(fallback,1300);
+ }catch(e){fallback();}
+}
+
+function loadSetup(){enforceFixedSettings();show('setup');$('#playerOne').value=config.names[0];$('#playerTwo').value=config.names[1];refreshSetupLabels();}
+function enforceFixedSettings(){config.subject='Science';config.sound=true;config.voice=true;}
+function openLesson(){lessonScenes=LESSON_STORIES[config.difficulty]||LESSON_STORIES.easy;lessonIndex=0;show('lesson');drawLesson();}
+function lessonRecordingPath(){const n=lessonIndex+1;return `audio/voice/lesson-${config.difficulty}-${String(n).padStart(2,'0')}.mp3`;}
+function narrateLessonScene(){const s=lessonScenes[lessonIndex];if(!s)return;const spoken=s.text+' Key idea. '+s.fact;speak(spoken,null,lessonRecordingPath());}
+function drawLesson(){sound.nav();const s=lessonScenes[lessonIndex];if(!s)return;$('#lessonEyebrow').textContent='Mandatory Story Lesson · '+config.difficulty.toUpperCase()+' MODE';$('#lIcon').textContent=s.icon;$('#lTitle').textContent=s.title;$('#lText').textContent=s.text;$('#lFact').innerHTML='<b>Key learning fact</b>'+s.fact;$('#lDots').innerHTML=lessonScenes.map((_,i)=>`<span class="${i===lessonIndex?'on':''}"></span>`).join('');$('#lessonBack').disabled=lessonIndex===0;$('#lessonNext').textContent=lessonIndex===lessonScenes.length-1?'Continue to Tutorial →':'Next →';$('#lessonProgress').textContent='Scene '+(lessonIndex+1)+' / '+lessonScenes.length;narrateLessonScene();}
+function lessonFactPulse(){const box=$('#lFact');box.animate([{transform:'scale(1)',boxShadow:'0 0 0 0 #7fffd422'},{transform:'scale(1.02)',boxShadow:'0 0 0 12px #7fffd400'},{transform:'scale(1)',boxShadow:'0 0 0 0 #7fffd400'}],{duration:680,easing:'ease-out'});}
+function speakLessonFact(){const s=lessonScenes[lessonIndex];if(!s)return;lessonFactPulse();speak('Key learning fact. '+s.fact);}
+function finishLesson(){openTutorial();}
+function openTutorial(){tutorialIndex=0;show('tutorial');drawTutorial();}
+const RECORDED_TUTORIAL_PAGES = new Set([1,2,3,4,5,6,7]);
+function tutorialRecordingPath(){const n=tutorialIndex+1;return RECORDED_TUTORIAL_PAGES.has(n)?`audio/voice/tutorial-${String(n).padStart(2,'0')}.mp3`:null;}
+function drawTutorial(){sound.nav();let t=TEACHER_STEPS[tutorialIndex];$('#tIcon').textContent=t.icon;$('#tTitle').textContent=t.title;$('#tText').textContent=t.text;$('#tDots').innerHTML=TEACHER_STEPS.map((_,i)=>`<span class="${i===tutorialIndex?'on':''}"></span>`).join('');$('#tutorialBack').disabled=tutorialIndex===0;$('#tutorialNext').textContent=tutorialIndex===TEACHER_STEPS.length-1?'🎮 Start Science Match':'Next →';$('#tutorialProgress').textContent='Page '+(tutorialIndex+1)+' / '+TEACHER_STEPS.length;speak(t.text,null,tutorialRecordingPath());}
+function finishTutorial(){enforceFixedSettings();saveConfig();newGame();}
+$('#homePlay').onclick=loadSetup;$('#setupHome').onclick=()=>show('home');
+function startMatchWithTutorial(){sound.init();sound.select();enforceFixedSettings();game=null;particles=[];hideOverlays();openLesson();}
+$('#lessonBack').onclick=()=>{if(lessonIndex){lessonIndex--;drawLesson()}};
+$('#lessonNext').onclick=()=>{if(lessonIndex===lessonScenes.length-1)finishLesson();else{lessonIndex++;drawLesson()}};
+$('#lessonRepeat').onclick=()=>narrateLessonScene();
+$('#lessonFact').onclick=()=>speakLessonFact();
+$('#tutorialBack').onclick=()=>{if(tutorialIndex){tutorialIndex--;drawTutorial()}};$('#tutorialNext').onclick=()=>{if(tutorialIndex===TEACHER_STEPS.length-1)finishTutorial();else{tutorialIndex++;drawTutorial()}};$('#tutorialRepeat').onclick=()=>speak(TEACHER_STEPS[tutorialIndex].text,null,tutorialRecordingPath());
+$$('.mode').forEach(b=>b.onclick=()=>{config.difficulty=b.dataset.difficulty;saveConfig();$$('.mode').forEach(x=>{let yes=x===b;x.classList.toggle('selected',yes);x.setAttribute('aria-pressed',String(yes))})});
+
+function blankStats(){return {food:0,knowledge:0,correct:0,wrong:0,timeout:0,attempts:0,responseTotal:0,deaths:0,maxLength:START_LENGTH,history:[]};}
+function snake(i){const d=i===0?{x:1,y:0}:{x:-1,y:0},h=i===0?{x:6,y:8}:{x:COLS-7,y:ROWS-9};return {body:Array.from({length:START_LENGTH},(_,j)=>({x:h.x-d.x*j,y:h.y-d.y*j})),prev:null,dir:d,turns:[],pending:0,alive:true,respawnAt:0,protectedUntil:0,stats:blankStats()};}
+function reservedSpawnCell(p){return (Math.abs(p.x-6)<7&&Math.abs(p.y-8)<6)||(Math.abs(p.x-(COLS-7))<7&&Math.abs(p.y-(ROWS-9))<6);}
+function generateObstacles(){const rocks=[],used=new Set();let attempts=0;while(rocks.length<MODES[config.difficulty].rocks&&attempts++<5000){const p={x:random(2,COLS-3),y:random(2,ROWS-3)};if(used.has(key(p))||reservedSpawnCell(p))continue; // prevent tightly blocked paths
+ if(rocks.some(r=>Math.abs(r.x-p.x)+Math.abs(r.y-p.y)<3))continue;
+ rocks.push(p);used.add(key(p));}return rocks;}
+function occupied(p){return game.rockSet.has(key(p))||game.snakes.some(s=>s.alive&&s.body.some(b=>equal(b,p)))||game.food.some(f=>equal(f,p));}
+function freeCell(prefer){let best=null;for(let tries=0;tries<900;tries++){const p={x:random(1,COLS-2),y:random(1,ROWS-2)};if(occupied(p))continue;if(prefer&&!prefer(p))continue;return p;}for(let x=1;x<COLS-1;x++)for(let y=1;y<ROWS-1;y++){const p={x,y};if(!occupied(p)&&(!prefer||prefer(p)))return p;}return best;}
+function addFood(type){if(!game)return false;const p=freeCell();if(!p)return false;game.food.push({...p,type,phase:Math.random()*7});return true;}
+function stockFood(){if(!game)return;let normal=game.food.filter(f=>f.type==='normal').length,quiz=game.food.filter(f=>f.type==='quiz').length;while(normal++<22)if(!addFood('normal'))break;while(quiz++<2)if(!addFood('quiz'))break;}
+function newGame(){stopVoice();sound.init();config.names=[$('#playerOne').value.trim().slice(0,16)||'Player 1',$('#playerTwo').value.trim().slice(0,16)||'Player 2'];enforceFixedSettings();saveConfig();particles=[];
+ const snakes=[snake(0),snake(1)];game={state:'countdown',countdown:3,countdownPhase:3,remaining:MATCH_SECONDS,simTime:0,moveAcc:0,snakes,obstacles:[],rockSet:new Set(),food:[],quizQueue:[],quiz:null,used:[new Set(),new Set()],outcome:null,report:null,matchStart:Date.now()};game.obstacles=generateObstacles();game.rockSet=new Set(game.obstacles.map(key));stockFood();hideOverlays();show('game');$('#gamePause').textContent='⏸ Pause';$('#modeLabel').textContent=config.difficulty.toUpperCase()+' MODE';for(let i=0;i<2;i++)$('#hudName'+i).textContent=config.names[i];updateHud();sound.setMode('countdown');sound.countdown(3);}
+$('#startGame').onclick=startMatchWithTutorial;$('#gameRestart').onclick=()=>{if(!game)return;startMatchWithTutorial()};$('#gameExit').onclick=()=>{game=null;particles=[];hideOverlays();show('home')};
+function hideOverlays(){$$('.overlay').forEach(o=>o.classList.remove('show'));}
+function togglePause(){if(!game||screen!=='game')return;if(game.state==='playing'){sound.setMode('paused');sound.select();game.state='paused';$('#pauseOverlay').classList.add('show');$('#gamePause').textContent='▶ Resume';focusIndex.pause=0;renderFocus('pause');}else if(game.state==='paused'){game.state='playing';sound.setMode('game');sound.select();$('#pauseOverlay').classList.remove('show');$('#gamePause').textContent='⏸ Pause';}}
+$('#gamePause').onclick=togglePause;$('#resumeGame').onclick=togglePause;
+function safeRespawnPosition(i){let choices=[];const directions=[{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];
+ for(let attempt=0;attempt<1000;attempt++){let x=random(5,COLS-6),y=random(5,ROWS-6),d=randItem(directions),body=Array.from({length:START_LENGTH},(_,j)=>({x:x-d.x*j,y:y-d.y*j}));if(body.some(p=>p.x<2||p.y<2||p.x>=COLS-2||p.y>=ROWS-2||occupied(p)))continue;if(game.snakes.some((s,other)=>other!==i&&s.alive&&s.body.some(h=>Math.abs(h.x-x)+Math.abs(h.y-y)<7)))continue;return {body,d};}
+ // A guaranteed fallback for a crowded map: use a safe start zone, and avoid spawning overlapping another snake.
+ for(let x=START_LENGTH+2;x<COLS-4;x++)for(let y=3;y<ROWS-3;y++)for(let d of directions){let body=Array.from({length:START_LENGTH},(_,j)=>({x:x-d.x*j,y:y-d.y*j}));if(body.every(p=>p.x>=1&&p.y>=1&&p.x<COLS-1&&p.y<ROWS-1&&!occupied(p)))return {body,d};}return null;}
+function respawn(i){let s=game.snakes[i],pos=safeRespawnPosition(i);if(!pos){s.respawnAt=game.simTime+0.5;return;}s.body=pos.body;s.dir=pos.d;s.turns=[];s.pending=0;s.prev=null;s.alive=true;s.protectedUntil=game.simTime+2;burst(s.body[0].x,s.body[0].y,SKINS[i].spark,22);sound.respawn();}
+function burst(x,y,color,n=15){for(let j=0;j<n;j++){const a=Math.random()*Math.PI*2,v=random(45,160);particles.push({x:(x+.5)*CELL,y:(y+.5)*CELL,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:.45+Math.random()*.55,size:random(2,5),color});}}
+function die(i){const s=game.snakes[i];if(!s.alive)return;const old=s.body.slice(),length=old.length+s.pending;s.alive=false;s.respawnAt=game.simTime+3;s.stats.deaths++;s.stats.maxLength=Math.max(s.stats.maxLength,length);
+ let dropped=0;for(let j=0;j<old.length&&dropped<Math.min(14,Math.max(3,Math.ceil(length*.55)));j++){const p=old[j];if(game.rockSet.has(key(p))||game.food.some(f=>equal(f,p)))continue;game.food.push({...p,type:'drop',phase:Math.random()*7});dropped++;}
+ const h=old[0];if(h)burst(h.x,h.y,SKINS[i].spark,35);s.body=[];s.pending=0;s.turns=[];s.prev=null;s.protectedUntil=0;sound.hit();}
+const inside=p=>p.x>=0&&p.y>=0&&p.x<COLS&&p.y<ROWS;
+function queueDirection(i,d){if(!game||game.state!=='playing')return;const s=game.snakes[i];if(!s.alive)return;const last=s.turns.length?s.turns[s.turns.length-1]:s.dir;if(d.x===-last.x&&d.y===-last.y)return;if(d.x===last.x&&d.y===last.y)return;if(s.turns.length<2)s.turns.push(d);}
+function tick(){if(!game||game.state!=='playing')return;
+ const g=game, snakes=g.snakes, moves=snakes.map((s,i)=>{if(!s.alive)return null;if(s.turns.length)s.dir=s.turns.shift();let h=s.body[0],next={x:h.x+s.dir.x,y:h.y+s.dir.y};let food=g.food.find(f=>equal(f,next));let hasGrowth=s.pending>0||!!food&&food.type!=='quiz';return {next,food,hasGrowth};});
+ const dead=[false,false];
+ // Resolve simultaneous head collisions before moving. Swapping head locations also counts.
+ if(moves[0]&&moves[1]){
+  const a=moves[0].next,b=moves[1].next,head0=snakes[0].body[0],head1=snakes[1].body[0];
+  if(equal(a,b)||(equal(a,head1)&&equal(b,head0))){const shield0=g.simTime<snakes[0].protectedUntil,shield1=g.simTime<snakes[1].protectedUntil;dead[0]=!shield0;dead[1]=!shield1;}
+ }
+ for(let i=0;i<2;i++){
+  const m=moves[i];if(!m||dead[i])continue;const s=snakes[i],protectedNow=g.simTime<s.protectedUntil;
+  if(!inside(m.next)||g.rockSet.has(key(m.next))){dead[i]=true;continue;}
+  for(let j=0;j<2;j++){const other=snakes[j];if(!other.alive)continue;const otherMove=moves[j];const excludeTail=otherMove&&!otherMove.hasGrowth?1:0;const targets=other.body.slice(0,other.body.length-excludeTail);
+   if(targets.some(p=>equal(p,m.next))){if(j===i||!protectedNow){dead[i]=true;break;}}
+  }
+ }
+ // Record body positions before update, permitting smooth interpolation.
+ for(let i=0;i<2;i++)if(moves[i]&&!dead[i]){
+  const s=snakes[i],m=moves[i];s.prev=s.body.map(p=>({...p}));s.body.unshift(m.next);
+  if(m.food&&m.food.type!=='quiz'){/* food itself adds one segment; keep any unused quiz growth */}else if(s.pending>0)s.pending--;else s.body.pop();
+  if(m.food){const fidx=g.food.indexOf(m.food);if(fidx>=0)g.food.splice(fidx,1);if(m.food.type==='quiz'){s.stats.knowledge++;g.quizQueue.push(i);sound.quiz();burst(m.next.x,m.next.y,'#ffe49c',19);}else{s.stats.food++;sound.eat();burst(m.next.x,m.next.y,m.food.type==='drop'?'#ff91d0':'#ffe68c',7);}}
+  s.stats.maxLength=Math.max(s.stats.maxLength,s.body.length+s.pending);
+ }
+ for(let i=0;i<2;i++)if(dead[i])die(i);
+ stockFood();
+ if(g.quizQueue.length&&g.state==='playing')beginNextQuestion();
+}
+function nextQuestion(i){const pool=QUESTIONS.filter(q=>q.category==='Science'&&q.difficulty===config.difficulty),used=game.used[i];let eligible=pool.filter((q)=>!used.has(q));if(!eligible.length){used.clear();eligible=pool;}let q=randItem(eligible);used.add(q);
+ // Shuffle answer locations fairly, so every button A–E can be the correct choice.
+ const shuffled=q.options.map((choice,index)=>({choice,wasCorrect:index===q.correct,originalIndex:index}));
+ for(let k=shuffled.length-1;k>0;k--){const j=random(0,k);[shuffled[k],shuffled[j]]=[shuffled[j],shuffled[k]];}
+ return {...q,sourceId:QUESTIONS.indexOf(q)+1,sourceOptionIds:shuffled.map(o=>o.originalIndex+1),options:shuffled.map(o=>o.choice),correct:shuffled.findIndex(o=>o.wasCorrect)};}
+function beginNextQuestion(){if(!game||!game.quizQueue.length){if(game&&game.state==='quiz')game.state='playing';return;}const i=game.quizQueue.shift(),q=nextQuestion(i),duration=MODES[config.difficulty].questionTime;
+ game.state='quiz';sound.setMode('quiz');game.quiz={player:i,question:q,left:duration,elapsed:0,reading:true,done:false,feedbackLeft:0,answer:-1,timedOut:false};$('#questionPlayer').textContent=(i===0?'🔵 ':'🟠 ')+config.names[i]+"'s question";$('#questionCategory').textContent=q.category+' · '+q.difficulty;$('#quizTitle').textContent=q.question;$('#quizHint').textContent='🔴 A  🟢 B  ⚪ C  🔵 D  🟡 E  ·  Correct = +5 segments';$('#quizFeedback').textContent='';$('#answers').innerHTML=q.options.map((answer,k)=>`<div class="answer" data-answer="${k}"><span class="keycap" data-color="${BUTTON_NAMES[k]}">${BUTTON_NAMES[k]}</span><span>${esc(answer)}</span></div>`).join('');$('#quizTimer').classList.remove('low');$('#quizTimer').textContent='🔊 Listening…';$('#quizOverlay').classList.add('show');const thisQuiz=game.quiz;speakScienceQuestion(q,()=>{if(game?.quiz!==thisQuiz||thisQuiz.done)return;thisQuiz.reading=false;$('#quizTimer').textContent=duration+'s';sound.quiz();});}
+function submitAnswer(index){if(!game||game.state!=='quiz'||!game.quiz||game.quiz.done)return;const a=game.quiz,q=a.question,s=game.snakes[a.player];a.done=true;stopVoice();a.answer=index;a.timedOut=index===-1;a.feedbackLeft=2.8;let correct=index===q.correct;
+ s.stats.attempts++;if(correct){s.pending+=5;s.stats.correct++;s.stats.maxLength=Math.max(s.stats.maxLength,s.body.length+s.pending);sound.good();burst(s.body[0].x,s.body[0].y,SKINS[a.player].spark,19);}else {s.stats.wrong++;if(index===-1)s.stats.timeout++;sound.bad();}s.stats.responseTotal+=a.elapsed;
+ s.stats.history.push({category:q.category,difficulty:q.difficulty,question:q.question,selected:index>=0?q.options[index]:null,correct:q.options[q.correct],explanation:q.explanation,isCorrect:correct,seconds:Number(a.elapsed.toFixed(2))});
+ $$('#answers .answer').forEach((b,k)=>{b.disabled=true;if(k===q.correct)b.classList.add('correct');if(k===index&&!correct)b.classList.add('wrong')});
+ $('#quizFeedback').innerHTML=correct?'✅ Correct! +5 snake segments! <span>'+esc(q.explanation)+'</span>':index===-1?'⏰ Time is up. No bonus. <span>'+esc(q.explanation)+'</span>':'💡 Good try! No bonus. <span>'+esc(q.explanation)+'</span>';
+ speak(correct?'Correct answer! Five more segments!':'The correct answer is '+q.options[q.correct]+'.');updateHud();}
+// Quiz answers are hardware-only; no on-screen click targets.
+function finishQuestion(){if(!game||game.state!=='quiz')return;game.quiz=null;stopVoice();$('#quizOverlay').classList.remove('show');stockFood();if(game.quizQueue.length)beginNextQuestion();else {game.state='playing';sound.setMode('game');}}
+function length(s){return s.alive?s.body.length+s.pending:0;}
+function updateHud(){if(!game)return;const g=game;$('#gameClock').textContent=Math.floor(Math.max(0,Math.ceil(g.remaining))/60).toString().padStart(2,'0')+':'+(Math.ceil(Math.max(0,g.remaining))%60).toString().padStart(2,'0');
+ g.snakes.forEach((s,i)=>{$('#length'+i).textContent=length(s);$('#correct'+i).textContent=s.stats.correct;$('#meter'+i).style.width=Math.min(100,length(s)*1.4)+'%';$('#status'+i).textContent=s.alive?(g.simTime<s.protectedUntil?' · 🛡️':''):' · 💀 '+Math.max(0,Math.ceil(s.respawnAt-g.simTime))+'s';});}
+function decideWinner(){let a=game.snakes[0],b=game.snakes[1],l0=length(a),l1=length(b);if(l0!==l1)return l0>l1?0:1;if(a.stats.correct!==b.stats.correct)return a.stats.correct>b.stats.correct?0:1;if(a.stats.deaths!==b.stats.deaths)return a.stats.deaths<b.stats.deaths?0:1;return null;}
+function completeMatch(){if(!game||game.state==='finished')return;hideOverlays();game.state='finished';const winner=decideWinner();game.outcome=winner;const record={game:'SikLab.io: Science Snake Arena',playedAt:new Date().toISOString(),difficulty:config.difficulty,subject:config.subject,matchLengthSeconds:MATCH_SECONDS,winningPlayer:winner===null?null:config.names[winner],players:game.snakes.map((s,i)=>({name:config.names[i],finalLength:length(s),...s.stats,accuracy:s.stats.attempts?Number((s.stats.correct/s.stats.attempts*100).toFixed(1)):0,avgResponseSeconds:s.stats.attempts?Number((s.stats.responseTotal/s.stats.attempts).toFixed(2)):null}))};game.report=record;
+ try{const reports=JSON.parse(localStorage.getItem('siklab_io_reports')||'[]');reports.unshift(record);localStorage.setItem('siklab_io_reports',JSON.stringify(reports.slice(0,20)));}catch(e){}
+ $('#resultTrophy').textContent=winner===null?'🤝':'🏆';$('#resultTitle').textContent=winner===null?'It’s a Draw!':config.names[winner]+' Wins!';$('#resultSub').textContent=winner===null?'Equal length, quiz score and deaths! A great match.':'The longest living snake at the final whistle takes the crown!';
+ $('#resultCards').innerHTML=record.players.map((p,i)=>`<div class="result-card ${winner===i?'champ':''}"><div class="result-name">${i===0?'🔵':'🟠'} ${esc(p.name)} ${winner===i?'👑':''}</div><div class="big">${p.finalLength}<span class="muted"> segments</span></div><dl><dt>Best length</dt><dd>${p.maxLength}</dd><dt>Quiz accuracy</dt><dd>${p.accuracy}%</dd><dt>Correct answers</dt><dd>${p.correct}/${p.attempts}</dd><dt>Average response</dt><dd>${p.avgResponseSeconds===null?'—':p.avgResponseSeconds+'s'}</dd><dt>Food collected</dt><dd>${p.food}</dd><dt>Times eliminated</dt><dd>${p.deaths}</dd></dl></div>`).join('');
+ const missed=record.players.flatMap(p=>p.history.filter(h=>!h.isCorrect).map(h=>({name:p.name,...h})));const total=record.players.reduce((sum,p)=>sum+p.attempts,0),correct=record.players.reduce((sum,p)=>sum+p.correct,0);$('#learningSummary').textContent=`Together, both players answered ${correct} of ${total} questions correctly${total?` (${Math.round(correct/total*100)}% accuracy)`:''}. ${missed.length?'Review a sample below; save the learning report for all missed questions.':'No missed questions recorded.'}`;
+ $('#wrongReview').innerHTML=missed.length?missed.slice(0,2).map(m=>`<div class="review-item"><b>${esc(m.name)} · ${esc(m.category)}:</b> ${esc(m.question)}<div>Correct: <b>${esc(m.correct)}</b>. ${esc(m.explanation)}</div></div>`).join(''):'<p style="margin-top:9px">Collect golden ❓ orbs to practice more questions next game!</p>';
+ show('results');if(winner!==null){sound.win();speak('Congratulations, '+config.names[winner]+'! You are the SikLab dot io champion!');}else speak('What a close battle! You both played wonderfully!');}
+$('#playAgain').onclick=startMatchWithTutorial;$('#backSetup').onclick=loadSetup;$('#resultsHome').onclick=()=>{game=null;show('home')};
+$('#exportResults').onclick=()=>{if(!game?.report)return;const blob=new Blob([JSON.stringify(game.report,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='siklab-io-science-learning-report.json';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+const DIRECTIONS={w:{x:0,y:-1},a:{x:-1,y:0},s:{x:0,y:1},d:{x:1,y:0},ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0}};
+// Common control pipeline for keyboard simulation, WebHID gamepads, USB Serial, Wi-Fi events.
+const MODE_NAMES=['easy','medium','hard'];
+const NAV_COOLDOWN_MS=185;
+let focusIndex={home:0,pause:0,results:0},lastNavTime=[0,0],lastNavSignature=['',''];
+function currentMenu(){const k=screen==='game'&&game?.state==='paused'?'pause':screen;return k;}
+function navChoices(k=currentMenu()){return $$((k==='pause'?'#pauseOverlay':'#'+k)+' [data-nav]');}
+function renderFocus(k=currentMenu()){
+ const opts=navChoices(k);if(!opts.length)return;
+ const current=Math.max(0,Math.min(opts.length-1,focusIndex[k]||0));focusIndex[k]=current;
+ opts.forEach((e,i)=>{e.classList.toggle('active-choice',i===current);e.setAttribute('aria-selected',String(i===current));});
+ const el=opts[current];if(el&&el.getBoundingClientRect().bottom>innerHeight-5)el.scrollIntoView({block:'nearest'});
+}
+function refreshSetupLabels(){
+ $$('#modeCards .difficulty-card').forEach(e=>{const yes=e.dataset.mode===config.difficulty;e.classList.toggle('active-choice',yes);e.setAttribute('aria-selected',String(yes));});
+}
+function onNavScreen(id){const k=id==='game'&&game?.state==='paused'?'pause':id;if(k in focusIndex){focusIndex[k]=0;renderFocus(k);}refreshSetupLabels();}
+function applySetupChange(kind,direction){
+ if(kind==='difficulty'){let n=MODE_NAMES.indexOf(config.difficulty);const name=MODE_NAMES[(n+direction+MODE_NAMES.length)%MODE_NAMES.length];$$('.mode').find(e=>e.dataset.difficulty===name).click();}
+ refreshSetupLabels();
+}
+function navDirection(player,d){
+ if(game&&screen==='game'&&game.state==='playing'){queueDirection(player,d);return;}
+ if(game&&screen==='game'&&['quiz','countdown','finished'].includes(game.state))return;
+ const now=performance.now(),signature=d.x+','+d.y;if(signature===lastNavSignature[player]&&now-lastNavTime[player]<NAV_COOLDOWN_MS)return;lastNavTime[player]=now;lastNavSignature[player]=signature;
+ if(screen==='lesson'){if(d.x>0||d.y>0)$('#lessonNext').click();else if(d.x<0||d.y<0)$('#lessonBack').click();return;}
+ if(screen==='tutorial'){if(d.x>0||d.y>0)$('#tutorialNext').click();else if(d.x<0||d.y<0)$('#tutorialBack').click();return;}
+ const k=currentMenu(),opts=navChoices(k);if(k==='setup'){applySetupChange('difficulty',Math.sign(d.x||d.y));sound.nav();return;}if(!opts.length)return;
+ if(d.y!==0){focusIndex[k]=(focusIndex[k]+Math.sign(d.y)+opts.length)%opts.length;renderFocus(k);sound.nav();return;}
+ if(k==='setup'&&(d.x||d.y)){applySetupChange('difficulty',Math.sign(d.x||d.y));sound.nav();}
+}
+function menuActivate(k=currentMenu()){
+ const act=navChoices(k)[focusIndex[k]||0]?.dataset.nav;
+ sound.init();
+ if(k==='home'){if(act==='play')$('#homePlay').click();}
+ else if(k==='setup'){$('#startGame').click();}
+ else if(k==='pause'){
+  if(act==='resume')$('#resumeGame').click();else if(act==='restart')$('#gameRestart').click();else if(act==='exit')$('#gameExit').click();
+ }
+ else if(k==='results'){
+  if(act==='rematch')$('#playAgain').click();else if(act==='change')$('#backSetup').click();else if(act==='download')$('#exportResults').click();else if(act==='home')$('#resultsHome').click();
+ }
+}
+function controllerButton(player,k){
+ sound.init();
+ if(screen==='game'&&game){
+  if(game.state==='quiz'){
+   if(game.quiz?.player===player)submitAnswer(k);
+   return;
+  }
+  if(game.state==='playing'){if(k===4)togglePause();return;}
+  if(game.state==='paused'){
+   if(k===0)menuActivate('pause');else if(k===1||k===4)togglePause();return;
+  }
+  return;
+ }
+ if(screen==='lesson'){
+  if(k===0||k===4)$('#lessonNext').click();
+  else if(k===1)$('#lessonBack').click();
+  else if(k===2)$('#lessonRepeat').click();
+  else if(k===3)$('#lessonFact').click();
+  return;
+ }
+ if(screen==='tutorial'){
+  if(k===0||k===4)$('#tutorialNext').click();
+  else if(k===1)$('#tutorialBack').click();
+  else if(k===2)$('#tutorialRepeat').click();
+  return;
+ }
+ if(k===0)menuActivate();
+ else if(k===1){if(screen==='setup'||screen==='results')show('home');}
+ else if(k===2){if(screen==='home'||screen==='setup'||screen==='results')speak('Science is our only subject. Teacher voice and sound are always on. Use the joystick to select an option.'); else if(screen==='lesson')speakLessonFact();}
+ else if(k===3){if(screen==='results')loadSetup();}
+ else if(k===4){if(screen==='home')$('#homePlay').click();else if(screen==='results')$('#playAgain').click();}
+}
+// Keyboard test only. Hardware uses the identical navDirection/controllerButton functions.
+document.addEventListener('keydown',e=>{
+ const t=e.target?.tagName;if(['INPUT','SELECT','TEXTAREA'].includes(t))return;
+ if(e.key.startsWith('Arrow')||[' ','Backspace'].includes(e.key))e.preventDefault();
+ const key=e.key.length===1?e.key.toLowerCase():e.key;
+ if(screen==='game'&&game){
+  if(game.state==='quiz'){
+   const owner=game.quiz?.player;const idx=(owner===0?'12345':'67890').indexOf(e.key);if(idx>=0&&!e.repeat)controllerButton(owner,idx);
+   return;
+  }
+  if(game.state==='playing'||game.state==='paused'){
+   if(key==='p'||key==='Escape'){if(!e.repeat)controllerButton(0,4);return;}
+   if(game.state==='playing'){
+    if(DIRECTIONS[key])navDirection(key.startsWith('Arrow')?1:0,DIRECTIONS[key]);
+    else if((key==='5'||key==='0')&&!e.repeat)controllerButton(key==='5'?0:1,4);
+   }else if(game.state==='paused'){
+    if(DIRECTIONS[key])navDirection(key.startsWith('Arrow')?1:0,DIRECTIONS[key]);
+    else if(key==='Enter'||key==='1')controllerButton(0,0);
+    else if(key==='Backspace')controllerButton(0,1);
+    else if('67890'.includes(key)&&!e.repeat)controllerButton(1,'67890'.indexOf(key));
+   }return;
+  }
+  return;
+ }
+ if(DIRECTIONS[key]){navDirection(key.startsWith('Arrow')?1:0,DIRECTIONS[key]);return;}
+ if(e.repeat)return;
+ if('67890'.includes(key)){controllerButton(1,'67890'.indexOf(key));return;}
+ if(key==='Enter'||key==='1')controllerButton(0,0);
+ else if(key==='Backspace'||key==='2')controllerButton(0,1);
+ else if(key==='r'||key==='3')controllerButton(0,2);
+ else if(key==='t'||key==='4')controllerButton(0,3);
+ else if(key===' '||key==='5')controllerButton(0,4);
+});
+let lastGamepadNav=['',''];
+function pollGamepads(){
+ let pads=[];try{pads=navigator.getGamepads?[...navigator.getGamepads()].filter(Boolean):[]}catch(e){}
+ pads.slice(0,2).forEach((pad,i)=>{
+  const last=padPrevious.get(pad.index)||{},buttons={};
+  for(let j=0;j<Math.max(16,pad.buttons.length);j++)buttons[j]=!!pad.buttons[j]?.pressed;
+  let dx=Number(buttons[15])-Number(buttons[14]),dy=Number(buttons[13])-Number(buttons[12]);
+  if(!dx&&!dy){const x=pad.axes[0]||0,y=pad.axes[1]||0;if(Math.max(Math.abs(x),Math.abs(y))>.48){if(Math.abs(x)>Math.abs(y))dx=Math.sign(x);else dy=Math.sign(y);}}
+  if(dx||dy){if(dx){dy=0;dx=Math.sign(dx)}else dy=Math.sign(dy);navDirection(i,{x:dx,y:dy});}
+  // Hardware USB HID mapping: buttons 0..4 = Red(A), Green(B), White(C), Blue(D), Yellow(E).
+  for(let k=0;k<5;k++)if(buttons[k]&&!last[k]){controllerButton(i,k);break;}
+  padPrevious.set(pad.index,buttons);
+ });
+}
+// ============================ PHYSICAL IOT CONTROLLERS ============================
+// Contract: one independent joystick + FIVE answer buttons per player.
+// Transport 1: USB-HID Gamepad (polled above); 2: WebSerial; 3: Wi-Fi WebSocket.
+// This is a browser-side protocol; microcontroller firmware must produce compatible messages.
+const serialPorts=[null,null],serialReaders=[null,null],serialOpen=[false,false];
+let controllerSocket=null,ioLastUpdate=0;const deviceSeen=[false,false];
+const lastIoPress=[Array(5).fill(-1e10),Array(5).fill(-1e10)];
+function ioFeedback(message){ioLastUpdate=performance.now();}
+function refreshIoStatus(){
+ let pads=[];try{pads=navigator.getGamepads?[...navigator.getGamepads()]:[]}catch(e){}
+ const wifi=!!controllerSocket&&controllerSocket.readyState===WebSocket.OPEN;
+ for(let i=0;i<2;i++){
+  const connected=!!pads[i]?.connected||!!serialOpen[i]||(wifi&&deviceSeen[i]);
+  const label=connected?(pads[i]?.connected?'USB Gamepad':serialOpen[i]?'USB Serial':'Wi-Fi'):'Not connected';
+  for(const [id,brief] of [[`deviceP${i+1}`,false],[`setupDeviceP${i+1}`,false],[`gameDeviceP${i+1}`,true]]){
+   const el=document.getElementById(id);if(!el)continue;el.classList.toggle('connected',connected);
+   el.textContent=(connected?'🟢':'🔴')+' '+(brief?`P${i+1}`:`Player ${i+1}`)+' · '+(brief?(connected?'Connected':'Offline'):label);
+  }
+ }
+}
+function normalizeJoystick(x,y){const a=Number(x),b=Number(y);if(!Number.isFinite(a)||!Number.isFinite(b)||Math.max(Math.abs(a),Math.abs(b))<.45)return null;return Math.abs(a)>Math.abs(b)?{x:Math.sign(a),y:0}:{x:0,y:Math.sign(b)};}
+function handleIoTMessage(payload,defaultPlayer=0){try{
+ let player=defaultPlayer,button=null,dir=null;
+ if(typeof payload==='string'){
+  let t=payload.trim();if(!t)return false;
+  if(t[0]==='{'){try{payload=JSON.parse(t)}catch(e){return false}}
+  else {const parts=t.toUpperCase().split(',').map(x=>x.trim()).filter(Boolean);if(/^P[12]$/.test(parts[0]))player=Number(parts.shift()[1])-1;
+   const cmd=parts[0];if(cmd==='A'||cmd==='B'||cmd==='C'||cmd==='D'||cmd==='E')button=cmd;
+   else if(cmd==='UP'||cmd==='DOWN'||cmd==='LEFT'||cmd==='RIGHT')dir=cmd;
+   else if((cmd==='JOY'||cmd==='AXIS')&&parts.length>=3){dir=normalizeJoystick(parts[1],parts[2]);}
+   else if(parts.length>=2&&!isNaN(Number(parts[0]))){dir=normalizeJoystick(parts[0],parts[1]);}
+  }
+ }
+ if(payload&&typeof payload==='object'&&!Array.isArray(payload)){
+  if(payload.player!==undefined){const p=Number(payload.player);if(p===1||p===2)player=p-1;else if(p===0)player=0;}
+  if(payload.pressed===false||payload.down===false)return true;
+  if(typeof payload.button==='string')button=payload.button.toUpperCase();
+  else if(typeof payload.answer==='string')button=payload.answer.toUpperCase();
+  if(typeof payload.direction==='string')dir=payload.direction.toUpperCase();
+  else if(typeof payload.dir==='string')dir=payload.dir.toUpperCase();
+  else if(payload.joystick&&typeof payload.joystick==='object')dir=normalizeJoystick(payload.joystick.x,payload.joystick.y);
+  else if(payload.x!==undefined&&payload.y!==undefined)dir=normalizeJoystick(payload.x,payload.y);
+ }
+ if(player!==0&&player!==1)return false;
+ if(button&&BUTTON_NAMES.includes(button)){deviceSeen[player]=true;refreshIoStatus();const k=BUTTON_NAMES.indexOf(button),now=performance.now();if(now-lastIoPress[player][k]<220)return true;lastIoPress[player][k]=now;ioFeedback('Player '+(player+1)+' pressed '+button);controllerButton(player,k);return true;}
+ if(typeof dir==='string'){const d={UP:{x:0,y:-1},DOWN:{x:0,y:1},LEFT:{x:-1,y:0},RIGHT:{x:1,y:0}};dir=d[dir]||null;}
+ if(dir&&typeof dir==='object'&&Number.isFinite(dir.x)&&Number.isFinite(dir.y)){deviceSeen[player]=true;refreshIoStatus();ioFeedback('Player '+(player+1)+' joystick '+(dir.x?dir.x>0?'RIGHT':'LEFT':dir.y>0?'DOWN':'UP'));navDirection(player,dir);return true;}
+ return false;
+ }catch(e){return false;}}
+async function disconnectSerial(i){const port=serialPorts[i],reader=serialReaders[i];serialOpen[i]=false;
+ if(reader){try{await reader.cancel()}catch(e){}try{reader.releaseLock()}catch(e){}if(serialReaders[i]===reader)serialReaders[i]=null;}
+ if(port){try{await port.close()}catch(e){}if(serialPorts[i]===port)serialPorts[i]=null;}
+ refreshIoStatus();}
+async function connectSerial(i,authorizedPort=null){if(serialPorts[i])return;
+ if(!('serial' in navigator)||!authorizedPort)return;
+ let port=null;try{port=authorizedPort;if(serialPorts.some(p=>p===port)){ioFeedback('This USB port is already assigned to another player');return;}
+ await port.open({baudRate:115200});serialPorts[i]=port;serialOpen[i]=true;refreshIoStatus();ioFeedback('Player '+(i+1)+' USB connected');
+ const reader=port.readable.getReader();serialReaders[i]=reader;const decoder=new TextDecoder();let buffer='';
+ // One newline-terminated UTF-8 message per event (e.g. P1,UP or P1,A).
+ while(serialOpen[i]){const {value,done}=await reader.read();if(done)break;if(!value)continue;buffer+=decoder.decode(value,{stream:true});if(buffer.length>8192)buffer='';let end;
+ while((end=buffer.indexOf('\n'))>=0){const line=buffer.slice(0,end).replace(/\r/g,'').trim();buffer=buffer.slice(end+1);handleIoTMessage(line,i);}}
+ }catch(e){ioFeedback('Player '+(i+1)+' USB: '+(e.message||'connection failed'));}
+ finally{if(serialPorts[i]===port){serialOpen[i]=false;if(serialReaders[i]){try{serialReaders[i].releaseLock()}catch(e){}serialReaders[i]=null;}try{await port.close()}catch(e){}serialPorts[i]=null;}refreshIoStatus();}}
+// Wi-Fi address is configured in source code/firmware, not on a player-facing screen.
+const AUTO_WS_URL=''; // e.g. ws://192.168.4.1:81; leave empty for USB-HID mode.
+function connectWifi(url=AUTO_WS_URL){if(!/^wss?:\/\/[^\s]+$/i.test(url))return;
+ try{const ws=new WebSocket(url);controllerSocket=ws;
+ ws.onopen=()=>{if(controllerSocket===ws)refreshIoStatus()};
+ ws.onmessage=ev=>{for(const m of String(ev.data).split(/\r?\n/))if(m.trim())handleIoTMessage(m,0)};
+ ws.onclose=()=>{if(controllerSocket===ws){controllerSocket=null;deviceSeen[0]=false;deviceSeen[1]=false;refreshIoStatus()}};
+ }catch(e){controllerSocket=null;refreshIoStatus();}}
+// No manual pairing options appear to players. USB HID is detected automatically.
+if(AUTO_WS_URL)connectWifi();
+window.addEventListener('gamepadconnected',refreshIoStatus);window.addEventListener('gamepaddisconnected',refreshIoStatus);
+// For hardware integration tests in a browser console: snakeQuestIoTTest('P1,A');
+window.snakeQuestIoTTest=(message,player=0)=>handleIoTMessage(message,player);
+refreshIoStatus();
+(async()=>{try{const ps=await navigator.serial?.getPorts?.()||[];for(let i=0;i<Math.min(2,ps.length);i++){if(!serialPorts[i])connectSerial(i,ps[i]);}}catch(e){}})();
+
+// ============================ RENDERING ============================
+function sphere(x,y,r,skin){const g=ctx.createRadialGradient(x-r*.36,y-r*.48,.4,x+r*.2,y+r*.25,r*1.5);g.addColorStop(0,skin.light);g.addColorStop(.28,skin.base);g.addColorStop(.75,skin.dark);g.addColorStop(1,skin.edge);ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
+function drawBackground(time){
+ const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#93ebff');sky.addColorStop(.42,'#59d6d5');sky.addColorStop(1,'#3d8fe2');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+ // playful clouds
+ ctx.fillStyle='rgba(255,255,255,.82)';
+ const cloud=(x,y,s)=>{ctx.beginPath();ctx.arc(x,y,18*s,0,Math.PI*2);ctx.arc(x+18*s,y-10*s,23*s,0,Math.PI*2);ctx.arc(x+42*s,y-2*s,18*s,0,Math.PI*2);ctx.arc(x+20*s,y+8*s,20*s,0,Math.PI*2);ctx.fill();};
+ cloud(90,84,1.2); cloud(890,98,1.05); cloud(985,172,.85); cloud(230,178,.75);
+ // soft science bubbles
+ for(let i=0;i<22;i++){const x=(i*97+Math.sin(time*.55+i)*26)%W;const y=(60+i*31+Math.cos(time*.4+i)*18)%H;const r=5+(i%4)*2;ctx.strokeStyle='rgba(255,255,255,.20)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();ctx.fillStyle='rgba(255,255,255,.08)';ctx.fill();}
+ // playground grid
+ ctx.strokeStyle='rgba(255,255,255,.16)';ctx.lineWidth=1;ctx.beginPath();for(let x=0;x<=W;x+=CELL){ctx.moveTo(x,0);ctx.lineTo(x,H)}for(let y=0;y<=H;y+=CELL){ctx.moveTo(0,y);ctx.lineTo(W,y)}ctx.stroke();
+ // tiny stars / lab sparkle
+ for(let x=2;x<COLS;x+=5)for(let y=2;y<ROWS;y+=4){const px=x*CELL+9,py=y*CELL+12;ctx.fillStyle='rgba(255,245,185,.35)';ctx.beginPath();ctx.arc(px,py,1.6,0,Math.PI*2);ctx.fill();}
+ // grassy bottom tint
+ const shade=ctx.createLinearGradient(0,H*.55,0,H);shade.addColorStop(0,'rgba(255,255,255,.02)');shade.addColorStop(1,'rgba(111,210,159,.22)');ctx.fillStyle=shade;ctx.fillRect(0,0,W,H);
+ // candy border
+ const frame=ctx.createLinearGradient(0,0,W,H);frame.addColorStop(0,'#fff4a9');frame.addColorStop(.34,'#ffffff');frame.addColorStop(.66,'#88f1d8');frame.addColorStop(1,'#7ecaff');ctx.strokeStyle=frame;ctx.lineWidth=6;ctx.strokeRect(3,3,W-6,H-6);
+}
+function drawRocks(){for(const r of game.obstacles){const x=r.x*CELL,y=r.y*CELL;ctx.fillStyle='rgba(0,18,44,.18)';ctx.beginPath();ctx.ellipse(x+15,y+24,15,7,0,0,7);ctx.fill();ctx.fillStyle='#8a78d6';ctx.beginPath();ctx.moveTo(x+3,y+15);ctx.lineTo(x+11,y+4);ctx.lineTo(x+24,y+5);ctx.lineTo(x+28,y+16);ctx.lineTo(x+24,y+27);ctx.lineTo(x+7,y+27);ctx.closePath();ctx.fill();ctx.fillStyle='#c9bcff';ctx.beginPath();ctx.moveTo(x+3,y+15);ctx.lineTo(x+11,y+4);ctx.lineTo(x+18,y+11);ctx.lineTo(x+14,y+18);ctx.closePath();ctx.fill();ctx.fillStyle='#aa97f0';ctx.beginPath();ctx.moveTo(x+11,y+4);ctx.lineTo(x+24,y+5);ctx.lineTo(x+18,y+11);ctx.closePath();ctx.fill();ctx.fillStyle='#7361bb';ctx.beginPath();ctx.moveTo(x+14,y+18);ctx.lineTo(x+18,y+11);ctx.lineTo(x+28,y+16);ctx.lineTo(x+24,y+27);ctx.lineTo(x+7,y+27);ctx.closePath();ctx.fill();ctx.strokeStyle='rgba(255,255,255,.45)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(x+8,y+12);ctx.lineTo(x+12,y+7);ctx.lineTo(x+16,y+9);ctx.stroke();}}
+function drawFood(time){for(const f of game.food){const x=(f.x+.5)*CELL,y=(f.y+.5)*CELL+Math.sin(time*3+f.phase)*2.5;ctx.save();if(f.type==='quiz'){ctx.shadowColor='#ffe4a1';ctx.shadowBlur=22+5*Math.sin(time*4);sphere(x,y,12.6,{light:'#fffdeb',base:'#ffe18a',dark:'#f7b74c',edge:'#bd6826'});ctx.shadowBlur=0;ctx.fillStyle='#8c5b2d';ctx.font='900 17px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',x,y+1);}else if(f.type==='drop'){ctx.shadowColor='#ff89c3';ctx.shadowBlur=8;sphere(x,y,7.5,{light:'#fff4f9',base:'#ffb4d7',dark:'#f475b0',edge:'#a93981'});}else{ctx.shadowColor='#d5ff8b';ctx.shadowBlur=10+Math.sin(time*5)*4;sphere(x,y,9.6,{light:'#fff8cc',base:'#bbee86',dark:'#6dc48c',edge:'#38865e'});ctx.shadowBlur=0;ctx.fillStyle='#f6ffcf';ctx.beginPath();ctx.ellipse(x-3,y-4,3,1.8,-.6,0,7);ctx.fill();}ctx.restore();}}
+function drawSnake(s,i,alpha,time){if(!s.alive||!s.body.length)return;const skin=SKINS[i],isProtected=game.simTime<s.protectedUntil;const pts=s.body.map((p,j)=>{const old=s.prev?.[j]||s.prev?.[s.prev.length-1]||p;return {x:(old.x+(p.x-old.x)*alpha+.5)*CELL,y:(old.y+(p.y-old.y)*alpha+.5)*CELL};});ctx.save();if(isProtected&&Math.sin(time*15)<-.1)ctx.globalAlpha=.5;
+ ctx.lineJoin='round';ctx.lineCap='round';if(pts.length>1){ctx.beginPath();ctx.moveTo(pts[0].x+3,pts[0].y+5);for(let j=1;j<pts.length;j++)ctx.lineTo(pts[j].x+3,pts[j].y+5);ctx.strokeStyle='#00102588';ctx.lineWidth=24;ctx.stroke();ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let j=1;j<pts.length;j++)ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=skin.dark;ctx.lineWidth=23;ctx.stroke();ctx.beginPath();ctx.moveTo(pts[0].x-1,pts[0].y-2);for(let j=1;j<pts.length;j++)ctx.lineTo(pts[j].x-1,pts[j].y-2);ctx.strokeStyle=skin.base;ctx.lineWidth=19;ctx.stroke();}
+ for(let j=pts.length-1;j>=1;j--){const p=pts[j],r=Math.max(5,11.7-j*.14);ctx.fillStyle='#00122865';ctx.beginPath();ctx.ellipse(p.x+3,p.y+5,r+1,r*.65,0,0,7);ctx.fill();sphere(p.x,p.y,r,skin);ctx.fillStyle='#ffffff34';ctx.beginPath();ctx.ellipse(p.x-3.2,p.y-4.2,r*.28,r*.17,-.3,0,7);ctx.fill();}
+ const h=pts[0],d=s.dir;ctx.translate(h.x,h.y);ctx.rotate(Math.atan2(d.y,d.x));sphere(0,0,15.5,skin);for(const k of [-1,1]){ctx.fillStyle='#ffffff';ctx.beginPath();ctx.ellipse(4,k*7.4,5.5,5.6,0,0,7);ctx.fill();ctx.fillStyle='#1c3652';ctx.beginPath();ctx.arc(6.5,k*7.4,2.85,0,7);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(7.3,k*7.4-1,1.05,0,7);ctx.fill();}ctx.strokeStyle=skin.edge;ctx.lineWidth=2.2;ctx.beginPath();ctx.arc(10,0,3.3,-1.05,1.05);ctx.stroke();if(Math.sin(time*5+i*2)>.94){ctx.strokeStyle='#ff7fa1';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(14,0);ctx.lineTo(22,0);ctx.lineTo(25,-3);ctx.moveTo(22,0);ctx.lineTo(25,3);ctx.stroke();}ctx.restore();
+ if(isProtected){ctx.save();ctx.globalAlpha=.19+.12*Math.sin(time*7);ctx.strokeStyle=SKINS[i].spark;ctx.lineWidth=3;ctx.beginPath();ctx.arc(h.x,h.y,22,0,Math.PI*2);ctx.stroke();ctx.restore();}}
+function drawParticles(dt){for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=140*dt;p.life-=dt;ctx.globalAlpha=Math.max(0,Math.min(1,p.life));ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size*Math.max(.3,p.life),0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;particles=particles.filter(p=>p.life>0);}
+function drawCountdown(){const number=Math.max(1,Math.ceil(game.countdown));ctx.fillStyle='#06152f91';ctx.fillRect(0,0,W,H);ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='#6df2d3';ctx.shadowBlur=35;ctx.fillStyle='#d1fff5';ctx.font='950 145px system-ui';ctx.fillText(number,W/2,H/2);ctx.shadowBlur=0;ctx.font='700 23px system-ui';ctx.fillStyle='#e7ffff';ctx.fillText('Get ready, young scientists!',W/2,H/2+100);}
+function render(now,dt){drawBackground(now/1000);if(game&&screen==='game'){drawRocks();drawFood(now/1000);const alpha=game.state==='playing'?Math.min(1,game.moveAcc/MODES[config.difficulty].step):1;game.snakes.forEach((s,i)=>drawSnake(s,i,alpha,now/1000));if(game.state==='countdown')drawCountdown();}drawParticles(dt);}
+function update(now){requestAnimationFrame(update);const dt=Math.min(.05,Math.max(0,(now-(lastFrame||now))/1000));lastFrame=now;pollGamepads();if(game&&screen==='game'){
+  if(game.state==='countdown'){game.countdown-=dt;const phase=Math.max(0,Math.ceil(game.countdown));if(phase!==game.countdownPhase){game.countdownPhase=phase;if(phase>0)sound.countdown(phase);}if(game.countdown<=0){game.countdown=0;game.state='playing';sound.setMode('game');sound.go();}}
+  else if(game.state==='playing'){
+    game.simTime+=dt;game.remaining=Math.max(0,game.remaining-dt);
+    for(let i=0;i<2;i++)if(!game.snakes[i].alive&&game.simTime>=game.snakes[i].respawnAt)respawn(i);
+    game.moveAcc+=dt*1000;const step=MODES[config.difficulty].step;
+    while(game&&game.state==='playing'&&game.moveAcc>=step){game.moveAcc-=step;tick();}
+    if(game&&game.state==='playing'&&game.remaining<=0)completeMatch();
+  }else if(game.state==='quiz'&&game.quiz){let a=game.quiz;if(a.done){a.feedbackLeft-=dt;if(a.feedbackLeft<=0)finishQuestion();}else if(!a.reading){a.elapsed+=dt;a.left-=dt;$('#quizTimer').textContent=Math.max(0,Math.ceil(a.left))+'s';$('#quizTimer').classList.toggle('low',a.left<=5);if(a.left<=0)submitAnswer(-1);}}
+  if(now-lastHudAt>100){updateHud();lastHudAt=now;}
+ }render(now,dt);}
+// Do not count tab-hidden time toward the quiz, or permit the match to run unseen.
+let hiddenAt=null;
+document.addEventListener('visibilitychange',()=>{if(document.hidden){hiddenAt=performance.now();if(game&&screen==='game'&&game.state==='playing')togglePause();}else hiddenAt=null;});
+window.addEventListener('blur',()=>{if(game&&screen==='game'&&game.state==='playing')togglePause();});
+// Expose non-mutating diagnostics useful for checking a capstone demo locally.
+window.siklabNavInfo=()=>({screen,menu:currentMenu(),focus:navChoices().map((e,i)=>({name:e.dataset.nav,selected:i===(focusIndex[currentMenu()]||0)})),subject:config.subject,difficulty:config.difficulty});
+window.siklabInfo=()=>game?{state:game.state,difficulty:config.difficulty,remaining:game.remaining,obstacles:game.obstacles.length,food:game.food.map(f=>({x:f.x,y:f.y,type:f.type})),snakes:game.snakes.map(s=>({length:length(s),alive:s.alive,head:s.body[0],correct:s.stats.correct,deaths:s.stats.deaths})),quizActive:!!game.quiz}:null;
+enforceFixedSettings();onNavScreen('home');requestAnimationFrame(update);
+
+/* Screen-fit controller: reflows layouts with no wheel, touch or page scrolling. */
+(function(){
+  const $view = id=>document.getElementById(id);
+  let raf=0;
+  function fitCenter(view){
+    const shell=view.querySelector(':scope > .shell');
+    if(!shell)return;
+    shell.style.setProperty('--view-fit','1');
+    const cs=getComputedStyle(view);
+    const availableW=Math.max(1,view.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)-4);
+    const availableH=Math.max(1,view.clientHeight-(parseFloat(cs.paddingTop)||0)-(parseFloat(cs.paddingBottom)||0)-4);
+    const width=shell.offsetWidth,height=shell.offsetHeight;
+    if(width===0||height===0)return;
+    const scale=Math.max(.2,Math.min(1,availableW/width,availableH/height));
+    shell.style.setProperty('--view-fit',String(scale));
+  }
+  function fitArena(){
+    const root=$view('game');if(!root.classList.contains('active'))return;
+    const shell=root.querySelector('.game-shell');
+    const arena=root.querySelector('.arena-wrap');
+    const canvas=root.querySelector('canvas');
+    if(!shell||!arena||!canvas)return;
+    const head=shell.querySelector('.game-head'),hud=shell.querySelector('.hud'),foot=shell.querySelector('.footnote');
+    const marginBottom=el=>parseFloat(getComputedStyle(el).marginBottom)||0;
+    const marginTop=el=>parseFloat(getComputedStyle(el).marginTop)||0;
+    const overhead=head.offsetHeight+marginBottom(head)+hud.offsetHeight+marginBottom(hud)+foot.offsetHeight+marginTop(foot)+4;
+    const maxHeight=Math.max(40,shell.clientHeight-overhead);
+    const style=getComputedStyle(arena);
+    const border=(parseFloat(style.borderLeftWidth)||0)+(parseFloat(style.borderRightWidth)||0)+(parseFloat(style.paddingLeft)||0)+(parseFloat(style.paddingRight)||0);
+    const borderY=(parseFloat(style.borderTopWidth)||0)+(parseFloat(style.borderBottomWidth)||0)+(parseFloat(style.paddingTop)||0)+(parseFloat(style.paddingBottom)||0);
+    const aspect=canvas.width/canvas.height;
+    const w=Math.max(70,Math.min(shell.clientWidth,(maxHeight-borderY)*aspect+border));
+    const h=Math.min(maxHeight,(w-border)/aspect+borderY);
+    arena.style.width=Math.floor(w)+'px';
+    arena.style.height=Math.floor(h)+'px';
+  }
+  function fitDialog(id){
+    const overlay=$view(id),modal=overlay?.querySelector('.modal');
+    if(!overlay||!modal||!overlay.classList.contains('show'))return;
+    modal.style.zoom='1';
+    const cs=getComputedStyle(overlay);
+    const aw=overlay.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)-4;
+    const ah=overlay.clientHeight-(parseFloat(cs.paddingTop)||0)-(parseFloat(cs.paddingBottom)||0)-4;
+    const ratio=Math.min(1,aw/Math.max(1,modal.scrollWidth),ah/Math.max(1,modal.scrollHeight));
+    modal.style.zoom=String(Math.max(.35,ratio));
+  }
+  function layout(){raf=0;const view=document.querySelector('.view.active');if(!view)return;
+    if(view.id==='game'){fitArena();fitDialog('quizOverlay');fitDialog('pauseOverlay');}
+    else fitCenter(view);
+  }
+  function schedule(){if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(layout);}
+  window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('orientationchange',schedule,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',schedule,{passive:true});
+  const obs=new MutationObserver(schedule);
+  document.querySelectorAll('.view,#quizOverlay,#pauseOverlay').forEach(e=>obs.observe(e,{attributes:true,attributeFilter:['class']}));
+  ['tText','tTitle','resultCards','wrongReview','learningSummary','quizTitle','answers','quizFeedback'].forEach(id=>{
+    const e=$view(id);if(e)obs.observe(e,{childList:true,characterData:true,subtree:true});
+  });
+  /* Prevent arrow keys and Space from scrolling the host page in kiosk mode. */
+  window.addEventListener('keydown',event=>{
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','PageUp','PageDown','Home','End'].includes(event.key) && !/INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) event.preventDefault();
+  },{passive:false});
+  window.siklabFitViewport=layout;
+  requestAnimationFrame(layout);
+})();
+
+</script>
+<script>
+// Visible controls share existing actions with keyboard and IoT controllers.
+document.querySelectorAll('[data-trigger]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.trigger).click()));
+document.querySelectorAll('.difficulty-card').forEach(card=>{card.tabIndex=0;card.setAttribute('role','button');function choose(){document.querySelector('.mode[data-difficulty="'+card.dataset.mode+'"]').click();refreshSetupLabels();}card.addEventListener('click',choose);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();choose();}});});
+</script>
+</body>
+</html>
